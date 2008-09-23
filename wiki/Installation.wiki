@@ -3,6 +3,15 @@
 = Introduction =
 
 These projects are maven project. These is a (very) short, maven guide.
+The jar can be used outside a maven project as long as your webapp provides the following dependencies:
+  * spring-web-2.5.5
+  * common-logging-1.1.1
+  * spring-beans-2.5.5
+  * spring-core-2.5.5
+  * spring-context-2.5.5
+  * aopalliance-1.0
+  * log4j-1.4.9
+  * gwt-servlet-1.5.2 (should work with 1.4.x)
 
 
 = Details =
