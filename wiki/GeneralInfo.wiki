@@ -7,7 +7,7 @@ SpringGWTRemote servlet, in hosted mode and with wtp.
 The servlet simply forward the RPC request to a spring managed bean.
 
 == Hosted ==
-In MyModule.gwt.xml the sevlet class must be 
+In MyModule`.`gwt.xml the sevlet class must be 
 {{{
 <servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
 		path="/myserviceuri.gwt" />
