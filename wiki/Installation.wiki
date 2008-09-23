@@ -13,9 +13,13 @@ These projects are maven project. These is a (very) short, maven guide.
 
 == Checkout project ==
 
+{{{
 svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spring
+}}}
 
+{{{
 cd net-orcades-spring
+}}}
 
 == build eclipse metadata (for each project) ==
 {{{
