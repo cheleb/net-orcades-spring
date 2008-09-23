@@ -8,8 +8,8 @@ These projects are maven project. These is a (very) short, maven guide.
 = Details =
 
 * Prerequisite:
-** maven eclipse plugin
-** cypal studio 
+# maven eclipse plugin: http://m2eclipse.codehaus.org/
+# cypal studio: http://code.google.com/p/cypal-studio/ (for webapp sample).
 
 * Checkout project:
 
