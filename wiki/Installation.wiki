@@ -7,17 +7,17 @@ These projects are maven project. These is a (very) short, maven guide.
 
 = Details =
 
-* Prerequisite:
-1 maven eclipse plugin: http://m2eclipse.codehaus.org/
-2 cypal studio: http://code.google.com/p/cypal-studio/ (for webapp sample).
+== Prerequisite ==
+* maven eclipse plugin: http://m2eclipse.codehaus.org/
+* cypal studio: http://code.google.com/p/cypal-studio/ (for webapp sample).
 
-* Checkout project:
+== Checkout project ==
 
 svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spring
 
 cd net-orcades-spring
 
-* build eclipse metadata (for each project):
+== build eclipse metadata (for each project) ==
 
 $# cd orcades-spring-gwt
 $# mvn eclipse:clean eclipse:m2eclipse
@@ -27,4 +27,4 @@ $# mvn eclipse:clean eclipse:m2eclipse
 
 Now project are also eclipse project.
 
-* Open project within eclipse.
+== Open project within eclipse ==
