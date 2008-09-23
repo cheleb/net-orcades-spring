@@ -44,8 +44,21 @@ $# mvn eclipse:clean eclipse:m2eclipse
 }}}
 Now project are also eclipse project.
 
+== Deploy artifact (optional) ==
+{{{
+$# cd orcades-spring-gwt
+$# mvn clean install
+}}}
+
+
 == Open project within eclipse ==
 
 Now you can import those 2 projects with Import >> General >> Existing project into workspace.
+
+*be aware of m2eclipse behaviour with "workspace resolution"*
+
+If the orcades-sprint-gwt project is open in your workspace and "workspace resolution enabled (default), then you must add orcades-spring-gwt project to project classpath dependencies.
+
+
 
 Have fun...
