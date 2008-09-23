@@ -1,4 +1,4 @@
-#summary Main configuration file.
+#summary Main configuration files.
 
 = Hosted mode =
 
