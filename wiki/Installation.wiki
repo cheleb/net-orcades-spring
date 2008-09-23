@@ -18,13 +18,15 @@ svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spr
 cd net-orcades-spring
 
 == build eclipse metadata (for each project) ==
-
+{{{
 $# cd orcades-spring-gwt
 $# mvn eclipse:clean eclipse:m2eclipse
+}}}
 
+{{{
 $# cd orcades-spring-gwt-sample
 $# mvn eclipse:clean eclipse:m2eclipse
-
+}}}
 Now project are also eclipse project.
 
 == Open project within eclipse ==
