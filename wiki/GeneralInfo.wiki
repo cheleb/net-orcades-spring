@@ -3,8 +3,34 @@
 = Introduction =
 
 SpringGWTRemote servlet, in hosted mode and with wtp.
+
 The servlet simply forward the RPC request to a spring managed bean.
 
+== Hosted ==
+In MyModule.gwt.xml the sevlet class must be 
+{{{
+<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+		path="/myserviceuri.gwt" />
+}}}
+
+== Web mode ==
+
+In web mode, the servlet mapping is set to match all incoming request "*.gwt".
+
+{{{
+<servlet>
+		<servlet-name>orcades-spring-gwt</servlet-name>
+		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orcades-spring-gwt</servlet-name>
+		<url-pattern>*.gwt</url-pattern>
+	</servlet-mapping>
+}}}
+
+And it's done ... 
+
+The request will be forwarded to the Spring managed bean implementing your GWT Service.
 
 = Details =
 
