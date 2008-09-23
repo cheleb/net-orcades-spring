@@ -1,4 +1,5 @@
 #summary Maven project installation process.
+#labels Featured
 
 = Introduction =
 
