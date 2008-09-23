@@ -15,7 +15,7 @@ In MyModule.gwt.xml the sevlet class must be
 
 == Web mode ==
 
-In web mode, the servlet mapping is set to match all incoming request "*.gwt".
+In web mode, the servlet mapping is set to match all incoming request "\\*.gwt".
 
 {{{
 <servlet>
