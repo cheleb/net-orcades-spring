@@ -19,13 +19,13 @@ In web mode, the servlet mapping is set to match all incoming request "*.gwt".
 
 {{{
 <servlet>
-		<servlet-name>orcades-spring-gwt</servlet-name>
-		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>orcades-spring-gwt</servlet-name>
-		<url-pattern>*.gwt</url-pattern>
-	</servlet-mapping>
+  <servlet-name>orcades-spring-gwt</servlet-name>
+  <servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>orcades-spring-gwt</servlet-name>
+  <url-pattern>*.gwt</url-pattern>
+</servlet-mapping>
 }}}
 
 And it's done ... 
