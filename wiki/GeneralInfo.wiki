@@ -1,0 +1,12 @@
+#summary Getting started.
+
+= Introduction =
+
+User SpringGWTRemote servlet, in hosted mode and with wtp.
+
+
+= Details =
+
+There 2 projects:
+  * orcades-spring-gwt: holds the SpringGWTRemoteServlet
+  * orcades-spring-gwt-sample: a webapp sample, with configuration for hosted mode and WTP.
