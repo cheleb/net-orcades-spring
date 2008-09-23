@@ -10,6 +10,7 @@ These projects are maven project. These is a (very) short, maven guide.
 == Prerequisite ==
   * maven eclipse plugin: http://m2eclipse.codehaus.org/
   * cypal studio: http://code.google.com/p/cypal-studio/ (for webapp sample).
+  ** WTP (!)
 
 == Checkout project ==
 
@@ -34,3 +35,7 @@ $# mvn eclipse:clean eclipse:m2eclipse
 Now project are also eclipse project.
 
 == Open project within eclipse ==
+
+Now you can import to 2 projects as Import >> General >> Existing project into workspace.
+
+Have fun...
