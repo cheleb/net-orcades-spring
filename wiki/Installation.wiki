@@ -55,9 +55,15 @@ $# mvn clean install
 
 Now you can import those 2 projects with Import >> General >> Existing project into workspace.
 
-*be aware of m2eclipse behaviour with "workspace resolution"*
+*be aware* of m2eclipse behaviour with "workspace resolution" with WTP project
 
-If the orcades-sprint-gwt project is open in your workspace and "workspace resolution enabled (default), then you must add orcades-spring-gwt project to project classpath dependencies.
+For the orcades-spring-gwt-sample project only
+
+If the orcades-sprint-gwt project is open in your workspace and "workspace resolution" enabled (default), then you must add orcades-spring-gwt project to project classpath dependencies of the orcades-spring-gwt-sample (webapp) project.
+
+Also, the Project >> Properties >> Java EE Module dependencies must be correct:
+  * orcades-spring-gwt checked
+  * maven dependencies checked 
 
 
 
