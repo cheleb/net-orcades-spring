@@ -46,6 +46,6 @@ Now project are also eclipse project.
 
 == Open project within eclipse ==
 
-Now you can import to 2 projects as Import >> General >> Existing project into workspace.
+Now you can import those 2 projects with Import >> General >> Existing project into workspace.
 
 Have fun...
