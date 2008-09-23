@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name="com.google.gwt.user.User" />
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class="springsample.client.SampleModule" />
+	<inherits name="com.google.gwt.user.theme.standard.Standard" />
+  	<!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
+  	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
+	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+		path="/sample.gwt" />
+</module>
