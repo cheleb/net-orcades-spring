@@ -2,11 +2,12 @@
 
 = Introduction =
 
-User SpringGWTRemote servlet, in hosted mode and with wtp.
+SpringGWTRemote servlet, in hosted mode and with wtp.
+The servlet simply forward the RPC request to a spring managed bean.
 
 
 = Details =
 
-There 2 projects:
+Here are 2 projects:
   * orcades-spring-gwt: holds the SpringGWTRemoteServlet
   * orcades-spring-gwt-sample: a webapp sample, with configuration for hosted mode and WTP.
