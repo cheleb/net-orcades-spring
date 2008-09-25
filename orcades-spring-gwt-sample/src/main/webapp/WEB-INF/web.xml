@@ -6,14 +6,26 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+	
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>orcades-spring-gwt</servlet-name>
 		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>orcades-spring-gwt</servlet-name>
 		<url-pattern>*.gwt</url-pattern>
 	</servlet-mapping>
+	
 	<filter>
 		<description> This filter insure the avalability of Web Scopes
 			(request, session)</description>

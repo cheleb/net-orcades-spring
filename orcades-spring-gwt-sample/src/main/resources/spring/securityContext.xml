@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
+		<sec:filter-chain-map path-type="ant">
+			<sec:filter-chain pattern="/**/*.gwt"
+				filters="httpSessionContextIntegrationFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,admExceptionTranslationFilter,filterInvocationInterceptor" />
+		</sec:filter-chain-map>
+	</bean>
+	<bean id="httpSessionContextIntegrationFilter"
+		class="org.springframework.security.context.HttpSessionContextIntegrationFilter" />
+	<bean id="authenticationProcessingFilter"
+		class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilter" >
+		<property name="defaultTargetUrl" value="/index.jsp"></property>
+		<property name="authenticationManager"  ref="authenticationManager"></property>
+		<property name="filterProcessesUrl" value="/security-auth.gwt" />
+		</bean>
+	<bean id="securityContextHolderAwareRequestFilter"
+		class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
+		
+	<bean id="admExceptionTranslationFilter" class="net.orcades.spring.gwt.security.server.GWTExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean
+				class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilterEntryPoint">
+				<property name="loginFormUrl" value="/login/adminLoginPage.do" />
+				<property name="forceHttps" value="false" />
+			</bean>
+		</property>
+		<property name="accessDeniedHandler">
+			<bean class="org.springframework.security.ui.AccessDeniedHandlerImpl">
+				<property name="errorPage" value="/login/adm-accessDenied.jsp" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="filterInvocationInterceptor"
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager">
+			<bean class="org.springframework.security.vote.AffirmativeBased">
+				<property name="allowIfAllAbstainDecisions" value="false" />
+				<property name="decisionVoters">
+					<list>
+						<bean class="org.springframework.security.vote.RoleVoter">
+							<property name="rolePrefix" value=""></property>
+						</bean>
+						<bean class="org.springframework.security.vote.AuthenticatedVoter" />
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="objectDefinitionSource">
+			<value><![CDATA[
+                                PATTERN_TYPE_APACHE_ANT
+                                /**/user/*.gwt=ROLE_USER
+                        ]]></value>
+		</property>
+	</bean>
+	
+	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+	   <property name="providers">
+	    <list>
+	     <ref bean="authenticationProvider"/>
+	    </list>
+	   </property>
+	   
+	</bean>
+	
+	<bean id="authenticationProvider" class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+	   <property name="userDetailsService" ref="userDetailsService" />
+	   
+	</bean>
+	
+	
+	<sec:user-service id="userDetailsService">
+	 <sec:user password="zozo" name="zozo" authorities="ROLE_USER" />
+	</sec:user-service>
+	
+	<bean id="userDetailsService2" class="org.springframework.security.userdetails.memory.InMemoryDaoImpl">
+	 <property name="userMap">
+	  <bean class="org.springframework.security.userdetails.memory.UserMap">
+	   <property name="users">
+	   <map>
+	    <entry key="zozo" value="zozo=ROLE_USER"></entry>
+	  </map>
+	   </property>
+	  </bean>
+	  
+	 </property>
+	</bean>
+	
+	
+</beans>

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE module PUBLIC "-//GOOGLE//DTD HTML 1.5.2//EN" "gwt-module.dtd">
+
 <module>
 
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name="com.google.gwt.user.User" />
-
+	<inherits name="net.orcades.spring.gwt.security.GWTSecurity" />
 	<!-- Specify the app entry point class.                   -->
 	<entry-point class="springsample.client.SampleModule" />
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
   	<!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
   	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
 	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
-		path="/sample.gwt" />
+		path="/unsecure.gwt" />
+	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet" path="/user/showInfo.gwt" />
 </module>

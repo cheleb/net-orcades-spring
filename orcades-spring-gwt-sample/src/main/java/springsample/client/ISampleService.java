@@ -1,11 +1,12 @@
 package springsample.client;
 
+import net.orcades.spring.gwt.security.client.GWTAuthorizationRequiredException;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
-@RemoteServiceRelativePath("sample.gwt")
+@RemoteServiceRelativePath("unsecure.gwt")
 public interface ISampleService extends RemoteService {
 
 	public static class Util {
@@ -17,5 +18,5 @@ public interface ISampleService extends RemoteService {
 	}
 
 	
-	public String sayHelo(String who);
+	public String sayHelo(String who) throws GWTAuthorizationRequiredException;
 }
