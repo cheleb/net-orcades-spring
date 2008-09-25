@@ -46,8 +46,9 @@ cd ..
 }}}
 
 {{{
-$# cd orcades-spring-gwt-sample
-$# mvn clean package
+cd orcades-spring-gwt-sample
+mvn clean package
+cd ..
 }}}
 
 
