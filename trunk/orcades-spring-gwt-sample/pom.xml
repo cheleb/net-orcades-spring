@@ -144,5 +144,11 @@
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.orcades.spring</groupId>
+			<artifactId>orcades-spring-gwt-security</artifactId>
+			<version>0.3.0</version>
+		</dependency>
+		
 	</dependencies>
 </project>

@@ -16,6 +16,8 @@
 
     <context:annotation-config />
     
-    <context:component-scan base-package="springsample.server.component"></context:component-scan>
+    <context:component-scan base-package="springsample.server.component"   />
+
+    <import resource="securityContext.xml"/>
 
 </beans>
