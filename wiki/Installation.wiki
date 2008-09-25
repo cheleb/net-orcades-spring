@@ -44,10 +44,20 @@ $# mvn eclipse:clean eclipse:m2eclipse
 }}}
 Now project are also eclipse project.
 
-== Deploy artifact (optional) ==
+== Outside eclipse: Deploy/package artifact ==
 {{{
 $# cd orcades-spring-gwt
 $# mvn clean install
+}}}
+
+{{{
+$# cd orcades-spring-gwt-security
+$# mvn clean install
+}}}
+
+{{{
+$# cd orcades-spring-gwt-sample
+$# mvn clean package
 }}}
 
 
