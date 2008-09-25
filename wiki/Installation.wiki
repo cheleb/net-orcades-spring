@@ -32,27 +32,17 @@ svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spr
 cd net-orcades-spring
 }}}
 
-== build eclipse metadata (for each project) ==
-{{{
-$# cd orcades-spring-gwt
-$# mvn eclipse:clean eclipse:m2eclipse
-}}}
-
-{{{
-$# cd orcades-spring-gwt-sample
-$# mvn eclipse:clean eclipse:m2eclipse
-}}}
-Now project are also eclipse project.
-
 == Outside eclipse: Deploy/package artifact ==
 {{{
-$# cd orcades-spring-gwt
-$# mvn clean install
+cd orcades-spring-gwt
+mvn clean install
+cd ..
 }}}
 
 {{{
-$# cd orcades-spring-gwt-security
-$# mvn clean install
+cd orcades-spring-gwt-security
+mvn clean install
+cd ..
 }}}
 
 {{{
@@ -61,7 +51,30 @@ $# mvn clean package
 }}}
 
 
-== Open project within eclipse ==
+== Inside eclipse ==
+
+=== Build eclipse metadata (for each project) ===
+{{{
+cd orcades-spring-gwt
+mvn eclipse:clean eclipse:m2eclipse
+cd ..
+}}}
+
+{{{
+cd orcades-spring-gwt-security
+mvn eclipse:clean eclipse:m2eclipse
+cd ..
+}}}
+
+
+{{{
+cd orcades-spring-gwt-sample
+mvn eclipse:clean eclipse:m2eclipse
+cd ..
+}}}
+Now project are also eclipse project.
+
+=== Import in eclipse ===
 
 Now you can import those 2 projects with Import >> General >> Existing project into workspace.
 
