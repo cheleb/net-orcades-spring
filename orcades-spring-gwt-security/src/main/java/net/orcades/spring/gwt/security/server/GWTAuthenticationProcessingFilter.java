@@ -76,6 +76,23 @@ public class GWTAuthenticationProcessingFilter extends
 		}
 	}
 
+	@Override
+	protected boolean requiresAuthentication(HttpServletRequest request,
+			HttpServletResponse response) {
+		String uri = request.getRequestURI();
+        int pathParamIndex = uri.indexOf(';');
+
+        if (pathParamIndex > 0) {
+            // strip everything after the first semi-colon
+            uri = uri.substring(0, pathParamIndex);
+        }
+
+        if ("".equals(request.getContextPath())) {
+            return uri.endsWith(getFilterProcessesUrl());
+        }
+
+        return uri.endsWith(getFilterProcessesUrl());
+	}
 	
 
 	protected String obtainUsername(HttpServletRequest request) {
