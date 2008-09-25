@@ -81,21 +81,10 @@
 	
 	
 	<sec:user-service id="userDetailsService">
-	 <sec:user password="zozo" name="zozo" authorities="ROLE_USER" />
+	 <sec:user password="guest" name="guest" authorities="ROLE_USER" />
 	</sec:user-service>
 	
-	<bean id="userDetailsService2" class="org.springframework.security.userdetails.memory.InMemoryDaoImpl">
-	 <property name="userMap">
-	  <bean class="org.springframework.security.userdetails.memory.UserMap">
-	   <property name="users">
-	   <map>
-	    <entry key="zozo" value="zozo=ROLE_USER"></entry>
-	  </map>
-	   </property>
-	  </bean>
-	  
-	 </property>
-	</bean>
+	
 	
 	
 </beans>

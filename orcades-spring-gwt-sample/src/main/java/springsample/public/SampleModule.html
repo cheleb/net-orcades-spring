@@ -1,42 +1,75 @@
 <html>
-	<head>
-	
-		<!--                                           -->
-		<!-- Any title is fine                         -->
-		<!--                                           -->
-		<title>Wrapper HTML for SampleModule</title>
+<head>
 
-		<!--                                           -->
-		<!-- Use normal html, such as style            -->
-		<!--                                           -->
-		<style>
-			body,td,a,div,.p{font-family:arial,sans-serif}
-			div,td{color:#000000}
-			a:link,.w,.w a:link{color:#0000cc}
-			a:visited{color:#551a8b}
-			a:active{color:#ff0000}
-		</style>
+<!--                                           -->
+<!-- Any title is fine                         -->
+<!--                                           -->
+<title>Wrapper HTML for SampleModule</title>
 
-		<!--                                           -->
-		<!-- This script loads your compiled module.   -->
-		<!-- If you add any GWT meta tags, they must   -->
-		<!-- be added before this line.                -->
-		<!--                                           -->
-	</head>
+<!--                                           -->
+<!-- Use normal html, such as style            -->
+<!--                                           -->
+<style>
+body,td,a,div,.p {
+	font-family: arial, sans-serif
+}
 
-	<!--                                           -->
-	<!-- The body can have arbitrary html, or      -->
-	<!-- you can leave the body empty if you want  -->
-	<!-- to create a completely dynamic ui         -->
-	<!--                                           -->
-	<body>
+div,td {
+	color: #000000
+}
+
+a:link,.w,.w a:link {
+	color: #0000cc
+}
+
+a:visited {
+	color: #551a8b
+}
+
+a:active {
+	color: #ff0000
+}
+</style>
+
+<!--                                           -->
+<!-- This script loads your compiled module.   -->
+<!-- If you add any GWT meta tags, they must   -->
+<!-- be added before this line.                -->
+<!--                                           -->
+</head>
+
+<!--                                           -->
+<!-- The body can have arbitrary html, or      -->
+<!-- you can leave the body empty if you want  -->
+<!-- to create a completely dynamic ui         -->
+<!--                                           -->
+<body>
 
 
-		<!-- OPTIONAL: include this if you want history support -->
-		<iframe src="javascript:''" id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
+<!-- OPTIONAL: include this if you want history support -->
+<iframe src="javascript:''" id="__gwt_historyFrame"
+	style="width: 0; height: 0; border: 0"></iframe>
+
+<script type="text/javascript" language="javascript"
+	src="springsample.SampleModule.nocache.js"></script>
+
+<h1>Sample application</h1>
+<div>All RPC service are dispatched to Spring managed bean.</div>
+<div>Security is session based with the Spring Security (ex acegi framework).</div>
+<table>
+	<tr>
+		<td id="unsecure"></td>
+		<td>Unsecure GWT-RPC call</td>
 		
-   		<script type="text/javascript" language="javascript" src="springsample.SampleModule.nocache.js"></script>
-   		
-   		
-	</body>
+	</tr>
+	<tr>
+		<td id="secure"></td>
+		<td>Secure GWT-RPC call, retrieve user logued info.
+		<br />
+		(<b>guest</b>/<b>guest</b>)
+		</td>
+	</tr>
+</table>
+<div id="log"></div>
+</body>
 </html>
