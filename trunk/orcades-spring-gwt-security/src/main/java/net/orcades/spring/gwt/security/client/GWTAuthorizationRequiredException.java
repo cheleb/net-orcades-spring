@@ -2,6 +2,15 @@ package net.orcades.spring.gwt.security.client;
 
 public class GWTAuthorizationRequiredException extends Exception {
 
+	
+	public GWTAuthorizationRequiredException() {
+	
+	}
+	
+	public GWTAuthorizationRequiredException(String message) {
+		super(message);
+	}
+
 	/**
 	 * 
 	 */

@@ -59,7 +59,7 @@ public class GWTAuthenticationProcessingFilterEntryPoint extends
             RPCRequest rpcRequest = RPC.decodeRequest(requestPayload, null, payloadHelper);    	
     	
     	try {
-			RPCServletUtils.writeResponse(request.getSession().getServletContext(), (HttpServletResponse)response, RPC.encodeResponseForFailure(null, new GWTAuthorizationRequiredException(), rpcRequest.getSerializationPolicy()), false);
+			RPCServletUtils.writeResponse(request.getSession().getServletContext(), (HttpServletResponse)response, RPC.encodeResponseForFailure(null, new GWTAuthorizationRequiredException("Auth required"), rpcRequest.getSerializationPolicy()), false);
 		} catch (SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

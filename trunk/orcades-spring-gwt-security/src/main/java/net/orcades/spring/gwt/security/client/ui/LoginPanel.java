@@ -29,7 +29,15 @@ public class LoginPanel extends PopupPanel {
 		table.setWidget(1, 1, loginTextBox=new TextBox());
 		table.setWidget(2, 0, new Label("Password"));
 		table.setWidget(2, 1, passwordTextBox=new PasswordTextBox());
-		table.setWidget(3, 0, new PushButton("submit", new ClickListener() {
+		table.setWidget(3, 0, new PushButton("Cancel", new ClickListener() {
+
+			public void onClick(Widget widget) {
+				LoginPanel.this.hide();
+				
+			}
+			
+		}));
+		table.setWidget(3, 1, new PushButton("submit", new ClickListener() {
 
 			public void onClick(Widget sender) {
 				GWTAuthServiceAsync authService = GWT.create(GWTAuthService.class);
@@ -52,7 +60,7 @@ public class LoginPanel extends PopupPanel {
 			}
 			
 		}));
-		table.getFlexCellFormatter().setColSpan(3, 0, 2);
+		
 	}
 	
 }
