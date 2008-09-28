@@ -21,7 +21,7 @@ public class LoginPanel extends PopupPanel {
 	private TextBox loginTextBox;
 	private PasswordTextBox passwordTextBox;
 	
-	public LoginPanel(String message, final ClickListener clickListener) {
+	public LoginPanel(final String authServiceEndPoint, String message, final ClickListener clickListener) {
 		setWidget(table);
 		table.setWidget(0, 0, new Label(message));
 		table.getFlexCellFormatter().setColSpan(0, 0, 2);
@@ -42,7 +42,7 @@ public class LoginPanel extends PopupPanel {
 			public void onClick(Widget sender) {
 				GWTAuthServiceAsync authService = GWT.create(GWTAuthService.class);
 				ServiceDefTarget serviceDefTarget = (ServiceDefTarget) authService;
-				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()+"security-auth.gwt");
+				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()+authServiceEndPoint);
 				authService.autenticate(loginTextBox.getText(), passwordTextBox.getText(), new AsyncCallback<Boolean>() {
 
 					public void onFailure(Throwable caught) {

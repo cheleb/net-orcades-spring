@@ -29,6 +29,7 @@
     </properties>
 	
 	<build>
+		<finalName>spring-gwt</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

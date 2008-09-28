@@ -15,6 +15,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Component;
+
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
@@ -25,7 +27,9 @@ import com.google.gwt.user.server.rpc.SerializationPolicyLoader;
 import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
 import com.google.gwt.user.server.rpc.UnexpectedException;
 
+@Component
 public class GWTPayloadHelper implements SerializationPolicyProvider {
+
 	private final ThreadLocal<HttpServletRequest> perThreadRequest = new ThreadLocal<HttpServletRequest>();
 
 	private final ThreadLocal<HttpServletResponse> perThreadResponse = new ThreadLocal<HttpServletResponse>();
@@ -36,10 +40,15 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 	 */
 	private final Map<String, SerializationPolicy> serializationPolicyCache = new HashMap<String, SerializationPolicy>();
 
-	public GWTPayloadHelper(HttpServletRequest request,
-			HttpServletResponse response) {
+	public void begin(HttpServletRequest request, HttpServletResponse response) {
 		perThreadRequest.set(request);
 		perThreadResponse.set(response);
+	}
+
+	public void end() {
+		perThreadRequest.set(null);
+		perThreadResponse.set(null);
+
 	}
 
 	public final SerializationPolicy getSerializationPolicy(
@@ -199,10 +208,10 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 
 				is = getServletContext().getResourceAsStream(
 						serializationPolicyFilePath);
-				if(is==null) {
+				if (is == null) {
 					StringBuffer buffer = new StringBuffer(request.getScheme());
 					buffer.append("://").append(request.getServerName());
-					if(request.getServerPort()!=80) {
+					if (request.getServerPort() != 80) {
 						buffer.append(':').append(request.getServerPort());
 					}
 					buffer.append(request.getContextPath());
@@ -217,7 +226,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			}
 			try {
@@ -250,7 +259,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 				}
 			}
 		}
-        
+
 		return serializationPolicy;
 	}
 
@@ -258,14 +267,16 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 	 * Override this method to control what should happen when an exception
 	 * escapes the {@link #processCall(String)} method. The default
 	 * implementation will log the failure and send a generic failure response
-	 * to the client.<p/>
+	 * to the client.
+	 * <p/>
 	 * 
 	 * An "expected failure" is an exception thrown by a service method that is
 	 * declared in the signature of the service method. These exceptions are
 	 * serialized back to the client, and are not passed to this method. This
 	 * method is called only for exceptions or errors that are not part of the
 	 * service method's signature, or that result from SecurityExceptions,
-	 * SerializationExceptions, or other failures within the RPC framework.<p/>
+	 * SerializationExceptions, or other failures within the RPC framework.
+	 * <p/>
 	 * 
 	 * Note that if the desired behavior is to both send the GENERIC_FAILURE_MSG
 	 * response AND to rethrow the exception, then this method should first send
