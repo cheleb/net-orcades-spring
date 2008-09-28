@@ -18,6 +18,6 @@
     
     <context:component-scan base-package="springsample.server.component"   />
 
-    <import resource="securityContext.xml"/>
+    <import resource="classpath:META-INF/net.orcades/spring/securityContext.xml"/>
 
 </beans>

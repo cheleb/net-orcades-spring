@@ -18,7 +18,7 @@ public class SecuredAsyncCallback<T> implements AsyncCallback<T> {
 		if (arg0 instanceof GWTAuthorizationRequiredException) {
 			GWTAuthorizationRequiredException authException = (GWTAuthorizationRequiredException) arg0;
 			
-			LoginPanel loginPanel = new LoginPanel(authException.getMessage(), clickListener);
+			LoginPanel loginPanel = new LoginPanel(authException.getAuthServiceEndPoint(), authException.getMessage(), clickListener);
 			loginPanel.center();
 			loginPanel.show();
 		}
