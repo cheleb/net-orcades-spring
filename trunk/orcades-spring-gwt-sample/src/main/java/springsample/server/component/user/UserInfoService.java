@@ -1,5 +1,7 @@
 package springsample.server.component.user;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -15,11 +17,11 @@ public class UserInfoService implements IUserInfoService {
 	@Autowired
 	UserInfo userInfo;
 	
+	@Autowired
+	HttpServletRequest httpServletRequest;
+	
 	public UserInfoDTO showUserInfo() {
-
-		
-		
-		return new UserInfoDTO(userInfo.getLogin());
+		return new UserInfoDTO(httpServletRequest.getUserPrincipal().getName());
 	}
 
 }

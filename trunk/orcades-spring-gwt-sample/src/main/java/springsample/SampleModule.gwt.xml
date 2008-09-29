@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <!DOCTYPE module PUBLIC "-//GOOGLE//DTD GWT-MODULE 1.5.2//EN" "gwt-module.dtd">
 
 <module>
-
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="net.orcades.spring.gwt.security.GWTSecurity" />
@@ -14,5 +14,8 @@
   	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
 	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
 		path="/unsecure.gwt" />
-	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet" path="/user/showInfo.gwt" />
+	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+		path="/user/showInfo.gwt" />
+		<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+		path="/admin/showInfo.gwt" />
 </module>

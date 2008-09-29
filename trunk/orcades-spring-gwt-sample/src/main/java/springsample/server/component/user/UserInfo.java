@@ -17,18 +17,11 @@ public class UserInfo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String login;
 
-	@Autowired
-	public UserInfo(HttpServletRequest httpServletRequest) {
-		login = httpServletRequest.getUserPrincipal().getName();
-	}
 
 	public void init() {
 
 	}
 
-	public String getLogin() {
-		return login;
-	}
+
 }

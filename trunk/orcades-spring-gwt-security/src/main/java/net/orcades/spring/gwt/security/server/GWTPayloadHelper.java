@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -365,5 +366,22 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 			serializationPolicyCache.put(moduleBaseURL + strongName,
 					serializationPolicy);
 		}
+	}
+
+	public RPCRequest decodeRPCRequest() throws IOException, ServletException {
+		//
+		// Read the request fully.
+		//
+		String requestPayload = RPCServletUtils
+				.readContentAsUtf8(getThreadLocalRequest());
+		//
+		// Let subclasses see the serialized request.
+		//
+		onBeforeRequestDeserialized(requestPayload);
+
+		RPCRequest rpcRequest = RPC.decodeRequest(requestPayload, null,
+				this);
+		return rpcRequest;
+
 	}
 }

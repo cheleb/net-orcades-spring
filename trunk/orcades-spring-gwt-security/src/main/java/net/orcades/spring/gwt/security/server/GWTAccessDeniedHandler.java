@@ -8,35 +8,39 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.orcades.spring.gwt.security.client.GWTAccessDeniedException;
 import net.orcades.spring.gwt.security.client.GWTAuthorizationRequiredException;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.ui.AuthenticationEntryPoint;
-import org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint;
+import org.springframework.security.AccessDeniedException;
+import org.springframework.security.ui.AccessDeniedHandler;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.RPCServletUtils;
 
-public class GWTAuthenticationProcessingFilterEntryPoint implements AuthenticationEntryPoint, InitializingBean {
+public class GWTAccessDeniedHandler implements AccessDeniedHandler {
 
-
+	
 	@Autowired
 	private GWTPayloadHelper payloadHelper;
+	
 	
 	@Autowired
 	private GWTAuthenticationProcessingFilter authenticationProcessingFilter;
 
-	public void commence(ServletRequest req, ServletResponse resp,
-			AuthenticationException authException) throws IOException,
+	
+	public void handle(ServletRequest req, ServletResponse resp,
+			AccessDeniedException accessDeniedException) throws IOException,
 			ServletException {
-
+		
+		
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 
+		
+		
 		// Store the request & response objects in thread-local storage.
 
 		payloadHelper.begin(request, response);
@@ -57,8 +61,8 @@ public class GWTAuthenticationProcessingFilterEntryPoint implements Authenticati
 				RPCServletUtils.writeResponse(request.getSession()
 						.getServletContext(), (HttpServletResponse) response,
 						RPC.encodeResponseForFailure(null,
-								new GWTAuthorizationRequiredException(authenticationProcessingFilter.getFilterProcessesUrl(),
-										"Auth required"), rpcRequest
+								new GWTAccessDeniedException(authenticationProcessingFilter.getFilterProcessesUrl(),
+										"Access denied !!"), rpcRequest
 										.getSerializationPolicy()), false);
 			} catch (SerializationException e) {
 				// TODO Auto-generated catch block
@@ -76,11 +80,6 @@ public class GWTAuthenticationProcessingFilterEntryPoint implements Authenticati
 			payloadHelper.end();
 		}
 
-	}
-
-	public void afterPropertiesSet() throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

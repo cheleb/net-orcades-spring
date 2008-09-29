@@ -15,52 +15,86 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * 
+ * @author olivier nouguier olivier@orcades.net 
+ * Simple login panel.
+ *
+ */
 public class LoginPanel extends PopupPanel {
 
+	/**
+	 * Top container.
+	 */
 	private FlexTable table = new FlexTable();
+	/**
+	 * Login entry box.
+	 */
 	private TextBox loginTextBox;
+	/**
+	 * Password entry box.
+	 */
 	private PasswordTextBox passwordTextBox;
-	
-	public LoginPanel(final String authServiceEndPoint, String message, final ClickListener clickListener) {
+	private Label logMessage;
+
+	/**
+	 * Constructor.
+	 * @param authServiceEndPoint authentication end point.
+	 * @param message Message to show in header.
+	 * @param clickListener to call on successful authentication, may be null.
+	 */
+	public LoginPanel(final String authServiceEndPoint, String message,
+			final ClickListener clickListener) {
 		setWidget(table);
 		table.setWidget(0, 0, new Label(message));
 		table.getFlexCellFormatter().setColSpan(0, 0, 2);
 		table.setWidget(1, 0, new Label("Login"));
-		table.setWidget(1, 1, loginTextBox=new TextBox());
+		table.setWidget(1, 1, loginTextBox = new TextBox());
 		table.setWidget(2, 0, new Label("Password"));
-		table.setWidget(2, 1, passwordTextBox=new PasswordTextBox());
+		table.setWidget(2, 1, passwordTextBox = new PasswordTextBox());
 		table.setWidget(3, 0, new PushButton("Cancel", new ClickListener() {
 
 			public void onClick(Widget widget) {
 				LoginPanel.this.hide();
-				
+
 			}
-			
+
 		}));
 		table.setWidget(3, 1, new PushButton("submit", new ClickListener() {
 
 			public void onClick(Widget sender) {
-				GWTAuthServiceAsync authService = GWT.create(GWTAuthService.class);
+				if(StringUtils.isEmptyOrBlank(loginTextBox.getText()) || StringUtils.isEmptyOrBlank(passwordTextBox.getText())) {
+					logMessage.setText("Login AND password must be proviced");
+					return;
+				}
+				GWTAuthServiceAsync authService = GWT
+						.create(GWTAuthService.class);
 				ServiceDefTarget serviceDefTarget = (ServiceDefTarget) authService;
-				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()+authServiceEndPoint);
-				authService.autenticate(loginTextBox.getText(), passwordTextBox.getText(), new AsyncCallback<Boolean>() {
+				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()
+						+ authServiceEndPoint);
+				authService.autenticate(loginTextBox.getText(), passwordTextBox
+						.getText(), new AsyncCallback<Boolean>() {
 
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
+						logMessage.setText(caught.getMessage());
+
 					}
 
 					public void onSuccess(Boolean result) {
-						//RootPanel.get().add(new Label("Auth " + (result.booleanValue()?"successful":"failed")));
+						logMessage.setText("success");
 						LoginPanel.this.hide();
-						clickListener.onClick(null);
+						if (clickListener != null) {
+							clickListener.onClick(null);
+						}
 					}
-					
+
 				});
 			}
-			
+
 		}));
-		
+		table.setWidget(4, 0, logMessage = new Label());
+		table.getFlexCellFormatter().setColSpan(4, 0, 2);
+
 	}
-	
+
 }
