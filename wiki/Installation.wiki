@@ -10,9 +10,9 @@ These projects are maven project. These is a (very) short, maven guide.
 == Prerequisite ==
   * maven eclipse plugin: http://m2eclipse.codehaus.org/
   * cypal studio: http://code.google.com/p/cypal-studio/ (for webapp sample).
-  ** WTP (!)
+  * WTP (!)
 
-  ** gwt-log.2.5.2 (must be added manualy)
+  * [http://code.google.com/p/gwt-log/downloads/list gwt-log.2.5.2] (must be added manualy)
 
 == Checkout project ==
 
