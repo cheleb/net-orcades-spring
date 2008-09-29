@@ -4,6 +4,7 @@ import net.orcades.spring.gwt.security.client.GWTSecurityException;
 import net.orcades.spring.gwt.security.client.IGWTSecurityExceptionVisitor;
 import net.orcades.spring.gwt.security.client.ui.GWTSecurityExceptionVisitor;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
 /**
@@ -33,6 +34,8 @@ public class SecuredAsyncCallback<T> implements AsyncCallback<T> {
 		if (throwable instanceof GWTSecurityException) {
 			GWTSecurityException securityException = (GWTSecurityException)throwable ;
 			securityException.accept(securityExceptionVisitor);
+		}else {
+			Log.error(throwable.getMessage(), throwable);
 		}
 		
 	}

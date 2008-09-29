@@ -9,6 +9,7 @@ import springsample.client.admin.IAdminInfoService;
 import springsample.client.user.IUserInfoService;
 import springsample.client.user.UserInfoDTO;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Button;
@@ -35,8 +36,8 @@ public class SampleModule implements EntryPoint {
 
 									}
 
-									public void onFailure(Throwable arg0) {
-										// TODO Auto-generated method stub
+									public void onFailure(Throwable throwable) {
+										Log.error(throwable.getMessage(), throwable);
 
 									}
 
@@ -55,10 +56,8 @@ public class SampleModule implements EntryPoint {
 
 									public void onSuccess(
 											UserInfoDTO userInfoDTO) {
-										RootPanel.get("log").add(
-												new Label("User logued: "
-														+ userInfoDTO
-																.toString()));
+										Log.info("User logued: "
+												+ userInfoDTO.toString());
 
 									}
 
@@ -78,10 +77,8 @@ public class SampleModule implements EntryPoint {
 
 									public void onSuccess(
 											UserInfoDTO userInfoDTO) {
-										RootPanel.get("log").add(
-												new Label("User info: "
-														+ userInfoDTO
-																.toString()));
+										Log.info("User info: "
+												+ userInfoDTO.toString());
 
 									}
 
@@ -99,19 +96,18 @@ public class SampleModule implements EntryPoint {
 				ServiceDefTarget serviceDefTarget = (ServiceDefTarget) logoutService;
 				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()
 						+ "logout.gwt");
-				
+
 				logoutService.logout(new AsyncCallback<Boolean>() {
 
-					public void onFailure(Throwable arg0) {
-						// TODO Auto-generated method stub
-						
+					public void onFailure(Throwable throwable) {
+						Log.error(throwable.getMessage(), throwable);
+
 					}
 
 					public void onSuccess(Boolean arg0) {
-						RootPanel.get().add(new Label("Logout"));
-						
+						Log.debug("Logout");
 					}
-					
+
 				});
 
 			}
