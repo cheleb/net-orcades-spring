@@ -34,6 +34,4 @@ The request will be forwarded to the Spring managed bean implementing your GWT S
 
 = Details =
 
-Here are 2 projects:
-  * orcades-spring-gwt: holds the SpringGWTRemoteServlet
-  * orcades-spring-gwt-sample: a webapp sample, with configuration for hosted mode and WTP.
+  orcades-spring-gwt-sample: a webapp sample, with configuration for hosted mode and WTP.
