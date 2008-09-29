@@ -32,6 +32,6 @@ And it's done ...
 
 The request will be forwarded to the Spring managed bean implementing your GWT Service.
 
-= Details =
+= Sample =
 
   orcades-spring-gwt-sample: a webapp sample, with configuration for hosted mode and WTP.
