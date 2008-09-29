@@ -1,7 +1,7 @@
 package springsample.client.user;
 
 
-import net.orcades.spring.gwt.security.client.GWTAuthorizationRequiredException;
+import net.orcades.spring.gwt.security.client.GWTSecurityException;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -18,6 +18,6 @@ public interface IUserInfoService extends RemoteService {
 		}
 	}
 	
-	public UserInfoDTO showUserInfo() throws GWTAuthorizationRequiredException;
+	public UserInfoDTO showUserInfo() throws GWTSecurityException;
 
 }

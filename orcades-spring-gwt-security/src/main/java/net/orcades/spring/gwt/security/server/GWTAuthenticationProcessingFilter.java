@@ -83,24 +83,14 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 			throws IOException, ServletException {
 
 		if (requiresAuthentication(request, response)) {
-
+			//
+			// Store the request & response objects in thread-local storage.
+			//
 			payloadHelper.begin(request, response);
-
 			try {
-				// Store the request & response objects in thread-local storage.
-				//
-
-				// Read the request fully.
-				//
-				String requestPayload = RPCServletUtils
-						.readContentAsUtf8(request);
-
-				// Let subclasses see the serialized request.
-				//
-				payloadHelper.onBeforeRequestDeserialized(requestPayload);
-
-				RPCRequest rpcRequest = RPC.decodeRequest(requestPayload, null,
-						payloadHelper);
+				
+				
+				RPCRequest rpcRequest = payloadHelper.decodeRPCRequest();
 
 				perThreadRPCRequest.set(rpcRequest);
 
@@ -294,6 +284,7 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 	protected void onSuccessfulAuthentication(HttpServletRequest request,
 			HttpServletResponse response, Authentication authResult)
 			throws IOException {
+
 	}
 
 	protected void onUnsuccessfulAuthentication(HttpServletRequest request,

@@ -10,21 +10,21 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-
 	<context:annotation-config />
-
 	<context:component-scan base-package="net.orcades.spring.gwt.security.server" />
-
-	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
-		<sec:filter-chain-map path-type="ant">
-			<sec:filter-chain pattern="/**/*.gwt"
-				filters="httpSessionContextIntegrationFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,admExceptionTranslationFilter,filterInvocationInterceptor" />
-		</sec:filter-chain-map>
-	</bean>
-
-
 	<bean id="httpSessionContextIntegrationFilter"
-		class="org.springframework.security.context.HttpSessionContextIntegrationFilter" />
+		class="org.springframework.security.context.HttpSessionContextIntegrationFilter">
+	</bean>
+	<bean id="gwtLogoutFilter" class="net.orcades.spring.gwt.security.server.GWTLogoutFilter">
+	   <constructor-arg value="exit">
+	    
+	   </constructor-arg>
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+	</bean>
 	<bean id="authenticationProcessingFilter"
 		class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilter">
 		<property name="authenticationManager" ref="authenticationManager"></property>
@@ -32,20 +32,14 @@
 	</bean>
 	<bean id="securityContextHolderAwareRequestFilter"
 		class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
-
-	<bean id="admExceptionTranslationFilter"
-		class="net.orcades.spring.gwt.security.server.GWTExceptionTranslationFilter">
+	<bean id="exceptionTranslationFilter"
+		class="org.springframework.security.ui.ExceptionTranslationFilter">
 		<property name="authenticationEntryPoint">
 			<bean
-				class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilterEntryPoint">
-				<property name="loginFormUrl" value="/login/adminLoginPage.do" />
-				<property name="forceHttps" value="false" />
-			</bean>
+				class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilterEntryPoint" />
 		</property>
 		<property name="accessDeniedHandler">
-			<bean class="org.springframework.security.ui.AccessDeniedHandlerImpl">
-				<property name="errorPage" value="/login/adm-accessDenied.jsp" />
-			</bean>
+			<bean class="net.orcades.spring.gwt.security.server.GWTAccessDeniedHandler" />
 		</property>
 	</bean>
 	<bean id="filterInvocationInterceptor"
@@ -64,31 +58,17 @@
 				</property>
 			</bean>
 		</property>
-		<property name="objectDefinitionSource">
-			<value><![CDATA[
-                                PATTERN_TYPE_APACHE_ANT
-                                /**/user/*.gwt=ROLE_USER
-                        ]]></value>
-		</property>
+		<property name="objectDefinitionSource" ref="objectDefinitionSource" />
 	</bean>
-
 	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
 		<property name="providers">
 			<list>
 				<ref bean="authenticationProvider" />
 			</list>
 		</property>
-
 	</bean>
-
 	<bean id="authenticationProvider"
 		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService" ref="userDetailsService" />
-
 	</bean>
-
-
-	<sec:user-service id="userDetailsService">
-		<sec:user password="guest" name="guest" authorities="ROLE_USER" />
-	</sec:user-service>
 </beans>

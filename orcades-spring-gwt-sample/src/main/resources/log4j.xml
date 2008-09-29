@@ -42,7 +42,7 @@
     <logger name="org">
 		<level value="WARN" />
 	</logger>
-	<logger name="net.orcades.springgwt">
+	<logger name="net.orcades.spring.gwt">
 		<level value="DEBUG" />
 	</logger>
 	<root>

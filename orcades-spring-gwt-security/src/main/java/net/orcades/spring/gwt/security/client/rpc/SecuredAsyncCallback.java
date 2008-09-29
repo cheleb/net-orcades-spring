@@ -1,32 +1,43 @@
 package net.orcades.spring.gwt.security.client.rpc;
 
-import net.orcades.spring.gwt.security.client.GWTAuthorizationRequiredException;
-import net.orcades.spring.gwt.security.client.ui.LoginPanel;
+import net.orcades.spring.gwt.security.client.GWTSecurityException;
+import net.orcades.spring.gwt.security.client.IGWTSecurityExceptionVisitor;
+import net.orcades.spring.gwt.security.client.ui.GWTSecurityExceptionVisitor;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
-
+/**
+ * Generic callback to handle security exception.
+ * @author Olivier NOUGUIER
+ *
+ * @param <T>
+ */
 public class SecuredAsyncCallback<T> implements AsyncCallback<T> {
 
-	private ClickListener clickListener;
 
+	/**
+	 * Exception Visitor. 
+	 */
+	private IGWTSecurityExceptionVisitor securityExceptionVisitor;
+	
+	/**
+	 * Constructor.
+	 * @param clickListener to call on successful authentication, may be null. 
+	 */
 	public SecuredAsyncCallback(ClickListener clickListener) {
-		this.clickListener = clickListener;
+		securityExceptionVisitor = new GWTSecurityExceptionVisitor(clickListener);
 	}
 
-	public void onFailure(Throwable arg0) {
-		if (arg0 instanceof GWTAuthorizationRequiredException) {
-			GWTAuthorizationRequiredException authException = (GWTAuthorizationRequiredException) arg0;
-			
-			LoginPanel loginPanel = new LoginPanel(authException.getAuthServiceEndPoint(), authException.getMessage(), clickListener);
-			loginPanel.center();
-			loginPanel.show();
+	public void onFailure(Throwable throwable) {
+		
+		if (throwable instanceof GWTSecurityException) {
+			GWTSecurityException securityException = (GWTSecurityException)throwable ;
+			securityException.accept(securityExceptionVisitor);
 		}
 		
 	}
 
 	public void onSuccess(T object) {
-		// TODO Auto-generated method stub
 		
 	}
 
