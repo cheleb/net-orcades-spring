@@ -2,5 +2,5 @@
 
 2 project:
 
-  * orcades-spring-gwt
+  * [http://code.google.com/p/net-orcades-spring/wiki/SpringGWTRemoteServlet orcades-spring-gwt]
   * orcades-spring-gwt-security
