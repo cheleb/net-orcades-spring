@@ -144,7 +144,7 @@ public class GWTLogoutFilter implements Filter {
 			return uri.endsWith(filterProcessesUrl);
 		}
 
-		return uri.endsWith(request.getContextPath() + filterProcessesUrl);
+		return uri.endsWith(filterProcessesUrl);
 	}
 
 	/**
