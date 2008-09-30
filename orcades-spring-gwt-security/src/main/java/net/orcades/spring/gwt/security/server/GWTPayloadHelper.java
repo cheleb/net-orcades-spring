@@ -1,8 +1,5 @@
 package net.orcades.spring.gwt.security.server;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -191,45 +188,36 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 					.getSerializationPolicyFileName(contextRelativePath
 							+ strongName);
 
-			String cypalBuildDir = getServletContext().getInitParameter(
-					"cypal-build-dir");
-			InputStream is = null;
-			if (cypalBuildDir != null) {
-				File cypalBuildDirFile = new File(cypalBuildDir);
+			// Open the RPC resource file read its contents.
+			InputStream is = getServletContext().getResourceAsStream(
+					serializationPolicyFilePath);
+			if (is == null) {
+				//
+				// FIXME in hosted mode, the serialization cannot be resolved
+				// I have to send a request to the shell servlet with uses
+				// ServletContextProxy which is able to resolve the serializaton
+				// policies.
+				//
+				StringBuffer buffer = new StringBuffer(request.getScheme());
+				buffer.append("://").append(request.getServerName());
+				if (request.getServerPort() != 80) {
+					buffer.append(':').append(request.getServerPort());
+				}
+				buffer.append(request.getContextPath());
+				buffer.append(serializationPolicyFilePath);
 				try {
-					is = new FileInputStream(new File(cypalBuildDirFile,
-							serializationPolicyFilePath));
-				} catch (FileNotFoundException e) {
+					URL url = new URL(buffer.toString());
+					is = url.openStream();
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else {
 
-				// Open the RPC resource file read its contents.
-
-				is = getServletContext().getResourceAsStream(
-						serializationPolicyFilePath);
-				if (is == null) {
-					StringBuffer buffer = new StringBuffer(request.getScheme());
-					buffer.append("://").append(request.getServerName());
-					if (request.getServerPort() != 80) {
-						buffer.append(':').append(request.getServerPort());
-					}
-					buffer.append(request.getContextPath());
-					buffer.append(serializationPolicyFilePath);
-					try {
-						URL url = new URL(buffer.toString());
-						is = url.openStream();
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
 			}
+
 			try {
 				if (is != null) {
 					try {
@@ -268,16 +256,14 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 	 * Override this method to control what should happen when an exception
 	 * escapes the {@link #processCall(String)} method. The default
 	 * implementation will log the failure and send a generic failure response
-	 * to the client.
-	 * <p/>
+	 * to the client. <p/>
 	 * 
 	 * An "expected failure" is an exception thrown by a service method that is
 	 * declared in the signature of the service method. These exceptions are
 	 * serialized back to the client, and are not passed to this method. This
 	 * method is called only for exceptions or errors that are not part of the
 	 * service method's signature, or that result from SecurityExceptions,
-	 * SerializationExceptions, or other failures within the RPC framework.
-	 * <p/>
+	 * SerializationExceptions, or other failures within the RPC framework. <p/>
 	 * 
 	 * Note that if the desired behavior is to both send the GENERIC_FAILURE_MSG
 	 * response AND to rethrow the exception, then this method should first send
@@ -379,8 +365,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 		//
 		onBeforeRequestDeserialized(requestPayload);
 
-		RPCRequest rpcRequest = RPC.decodeRequest(requestPayload, null,
-				this);
+		RPCRequest rpcRequest = RPC.decodeRequest(requestPayload, null, this);
 		return rpcRequest;
 
 	}

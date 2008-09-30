@@ -1,10 +1,10 @@
 package net.orcades.spring.gwt.security.client.ui;
 
-import com.google.gwt.user.client.ui.ClickListener;
-
 import net.orcades.spring.gwt.security.client.GWTAccessDeniedException;
 import net.orcades.spring.gwt.security.client.GWTSecurityException;
 import net.orcades.spring.gwt.security.client.IGWTSecurityExceptionVisitor;
+
+import com.google.gwt.user.client.ui.ClickListener;
 
 public class GWTSecurityExceptionVisitor implements
 		IGWTSecurityExceptionVisitor {

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.orcades.spring.gwt.security.client.GWTAccessDeniedException;
-import net.orcades.spring.gwt.security.client.GWTAuthorizationRequiredException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.AccessDeniedException;

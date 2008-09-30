@@ -1,7 +1,5 @@
 package springsample.client;
 
-import net.orcades.spring.gwt.security.client.GWTAuthService;
-import net.orcades.spring.gwt.security.client.GWTAuthServiceAsync;
 import net.orcades.spring.gwt.security.client.GWTLogoutService;
 import net.orcades.spring.gwt.security.client.GWTLogoutServiceAsync;
 import net.orcades.spring.gwt.security.client.rpc.SecuredAsyncCallback;
@@ -12,13 +10,13 @@ import springsample.client.user.UserInfoDTO;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public class SampleModule implements EntryPoint {
 
