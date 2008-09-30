@@ -5,8 +5,7 @@
 	<artifactId>orcades-spring-gwt-sample</artifactId>
 	<packaging>war</packaging>
 	<version>1.1.0</version>
-	
-	
+	<description>A sample webapp for demo.</description>
 	<pluginRepositories>
        <pluginRepository>
          <id>gwt-maven</id>

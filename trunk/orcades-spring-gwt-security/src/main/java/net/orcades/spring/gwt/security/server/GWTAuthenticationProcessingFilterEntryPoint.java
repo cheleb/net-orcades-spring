@@ -14,7 +14,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.ui.AuthenticationEntryPoint;
-import org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
