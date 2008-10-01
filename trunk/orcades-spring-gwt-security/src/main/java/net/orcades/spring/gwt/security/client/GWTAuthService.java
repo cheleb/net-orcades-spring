@@ -4,6 +4,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 public interface GWTAuthService extends RemoteService {
 	
-	Boolean autenticate(String login, String password);
+	GWTAuthentication autenticate(String login, String password);
 
 }
