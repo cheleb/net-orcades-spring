@@ -20,4 +20,7 @@
 		path="/user/showInfo.gwt" />
 		<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
 		path="/admin/showInfo.gwt" />
+		
+		
+	<stylesheet src="orcades.css"/>
 </module>

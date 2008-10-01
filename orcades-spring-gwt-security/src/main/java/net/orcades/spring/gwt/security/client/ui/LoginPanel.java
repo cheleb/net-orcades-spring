@@ -2,7 +2,9 @@ package net.orcades.spring.gwt.security.client.ui;
 
 import net.orcades.spring.gwt.security.client.GWTAuthService;
 import net.orcades.spring.gwt.security.client.GWTAuthServiceAsync;
+import net.orcades.spring.gwt.security.client.GWTAuthentication;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -50,8 +52,10 @@ public class LoginPanel extends PopupPanel {
 		table.getFlexCellFormatter().setColSpan(0, 0, 2);
 		table.setWidget(1, 0, new Label("Login"));
 		table.setWidget(1, 1, loginTextBox = new TextBox());
+		
 		table.setWidget(2, 0, new Label("Password"));
 		table.setWidget(2, 1, passwordTextBox = new PasswordTextBox());
+		
 		table.setWidget(3, 0, new PushButton("Cancel", new ClickListener() {
 
 			public void onClick(Widget widget) {
@@ -73,14 +77,15 @@ public class LoginPanel extends PopupPanel {
 				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()
 						+ authServiceEndPoint);
 				authService.autenticate(loginTextBox.getText(), passwordTextBox
-						.getText(), new AsyncCallback<Boolean>() {
+						.getText(), new AsyncCallback<GWTAuthentication>() {
 
 					public void onFailure(Throwable caught) {
 						logMessage.setText(caught.getMessage());
 
 					}
 
-					public void onSuccess(Boolean result) {
+					public void onSuccess(GWTAuthentication result) {
+						Log.debug(result.toString());
 						logMessage.setText("success");
 						LoginPanel.this.hide();
 						if (clickListener != null) {
@@ -95,6 +100,9 @@ public class LoginPanel extends PopupPanel {
 		table.setWidget(4, 0, logMessage = new Label());
 		table.getFlexCellFormatter().setColSpan(4, 0, 2);
 
+		
+		loginTextBox.setText("guest");
+		passwordTextBox.setText("guest");
 	}
 
 }

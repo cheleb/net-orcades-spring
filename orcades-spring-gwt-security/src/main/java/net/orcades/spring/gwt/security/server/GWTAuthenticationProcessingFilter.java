@@ -1,12 +1,16 @@
 package net.orcades.spring.gwt.security.server;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.orcades.spring.gwt.security.client.GWTAuthentication;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.AuthenticationManager;
+import org.springframework.security.GrantedAuthority;
 import org.springframework.security.concurrent.SessionRegistry;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.event.authentication.InteractiveAuthenticationSuccessEvent;
@@ -88,8 +93,7 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 			//
 			payloadHelper.begin(request, response);
 			try {
-				
-				
+
 				RPCRequest rpcRequest = payloadHelper.decodeRPCRequest();
 
 				perThreadRPCRequest.set(rpcRequest);
@@ -215,13 +219,14 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 	}
 
 	protected void sendRedirect(HttpServletRequest request,
-			HttpServletResponse response, Boolean success) throws IOException {
+			HttpServletResponse response, GWTAuthentication gwtAuth)
+			throws IOException {
 		RPCRequest rpcRequest = perThreadRPCRequest.get();
 		try {
 			RPCServletUtils.writeResponse(request.getSession()
 					.getServletContext(), (HttpServletResponse) response, RPC
-					.encodeResponseForSuccess(rpcRequest.getMethod(), success),
-					false);
+					.encodeResponseForSuccess(rpcRequest.getMethod(), gwtAuth,
+							rpcRequest.getSerializationPolicy()), false);
 		} catch (SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -263,7 +268,17 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 							authResult, this.getClass()));
 		}
 
-		sendRedirect(request, response, Boolean.TRUE);
+		GrantedAuthority grantedAuthorities[] = authResult.getAuthorities();
+
+		GWTAuthentication gwtAuth = new GWTAuthentication();
+		List<String> gwtGrantedAuthorityList = new ArrayList<String>();
+		for (int i = 0; i < grantedAuthorities.length; i++) {
+			GrantedAuthority grantedAuthority = grantedAuthorities[i];
+			gwtGrantedAuthorityList.add(grantedAuthority.getAuthority());
+		}
+		gwtAuth.setGrantedAuthorities(gwtGrantedAuthorityList);
+
+		sendRedirect(request, response, gwtAuth);
 	}
 
 	protected void unsuccessfulAuthentication(HttpServletRequest request,
