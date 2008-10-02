@@ -1,52 +1,53 @@
 package springsample.client;
 
-import net.orcades.spring.gwt.security.client.GWTLogoutService;
-import net.orcades.spring.gwt.security.client.GWTLogoutServiceAsync;
+import net.orcades.spring.gwt.security.client.GWTAuthentication;
+import net.orcades.spring.gwt.security.client.GWTAuthenticationListener;
+import net.orcades.spring.gwt.security.client.GWTSecurityModule;
+import net.orcades.spring.gwt.security.client.rpc.GWTLogoutAsyncCallback;
 import net.orcades.spring.gwt.security.client.rpc.SecuredAsyncCallback;
+import net.orcades.spring.gwt.security.client.ui.SecuredPushButton;
 import springsample.client.admin.IAdminInfoService;
+import springsample.client.ui.ActionPanel;
+import springsample.client.ui.BoardPanel;
 import springsample.client.user.IUserInfoService;
 import springsample.client.user.UserInfoDTO;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SampleModule implements EntryPoint {
+public class SampleModule implements EntryPoint, GWTAuthenticationListener {
+
+	
+
+	private BoardPanel boardPanel;
+
+
 
 	public void onModuleLoad() {
-		RootPanel.get("unsecure").add(
-				new Button("unsecured", new ClickListener() {
 
-					public void onClick(Widget widget) {
-						ISampleService.Util.getInstance().sayHelo("olivier",
-								new AsyncCallback<String>() {
+		Log.setUncaughtExceptionHandler();
 
-									public void onSuccess(String response) {
-										RootPanel.get("log").add(
-												new Label(response));
+		final RootPanel messagePanel = RootPanel.get("board");
 
-									}
+		boardPanel = new BoardPanel();
+		messagePanel.add(boardPanel);
+		
 
-									public void onFailure(Throwable throwable) {
-										Log.error(throwable.getMessage(), throwable);
+		GWTSecurityModule.addAuthenticationListener(this);
 
-									}
-
-								});
-
-					}
-
-				}));
-
-		RootPanel.get("secure").add(
-				new Button("User secured", new ClickListener() {
+		
+		HorizontalPanel loginPanel = new HorizontalPanel();
+		RootPanel.get("login-bar").add(loginPanel);
+		
+		loginPanel.add(
+				new Button("User login", new ClickListener() {
 
 					public void onClick(Widget widget) {
 						IUserInfoService.Util.getInstance().showUserInfo(
@@ -65,8 +66,8 @@ public class SampleModule implements EntryPoint {
 
 				}));
 
-		RootPanel.get("secure").add(
-				new Button("Admin secured", new ClickListener() {
+		loginPanel.add(
+				new Button("Admin Login", new ClickListener() {
 
 					public void onClick(Widget widget) {
 						IAdminInfoService.Util.getInstance().showUserInfo(
@@ -86,32 +87,65 @@ public class SampleModule implements EntryPoint {
 
 				}));
 
-		RootPanel.get().add(new Button("logout", new ClickListener() {
+		
+		loginPanel.add(new SecuredPushButton("logout", new ClickListener() {
 
-			public void onClick(Widget arg0) {
-				GWTLogoutServiceAsync logoutService = GWT
-						.create(GWTLogoutService.class);
-				ServiceDefTarget serviceDefTarget = (ServiceDefTarget) logoutService;
-				serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()
-						+ "logout.gwt");
+			public void onClick(Widget widget) {
 
-				logoutService.logout(new AsyncCallback<Boolean>() {
-
-					public void onFailure(Throwable throwable) {
-						Log.error(throwable.getMessage(), throwable);
-
-					}
-
-					public void onSuccess(Boolean arg0) {
-						Log.debug("Logout");
-					}
-
-				});
+				GWTSecurityModule.logout(new GWTLogoutAsyncCallback());
 
 			}
 
-		}));
+		}, "USER"));
 
 	}
+
+	
+
+	public void authenticated(GWTAuthentication authentication) {
+		RootPanel panel = RootPanel.get("entry-box");
+		if (authentication.userInRole("USER")) {
+			if (panel.getWidgetCount() == 0) {
+				final TextBox textBox;
+				panel.add(textBox = new TextBox());
+				textBox.addKeyboardListener(new KeyboardListener() {
+
+					public void onKeyDown(Widget sender, char keyCode,
+							int modifiers) {
+						if (keyCode == KEY_ENTER) {
+							IUserInfoService.Util.getInstance().newMessage(
+									textBox.getText(),
+									new ErrorAwareAsyncCallback<Message>() {
+										@Override
+										public void onSuccess(Message message) {
+											ActionPanel actionPanel = boardPanel.addMessage(message);
+											GWTSecurityModule.applyAuthentication(actionPanel);
+										}
+									});
+						}
+
+					}
+
+					public void onKeyPress(Widget sender, char keyCode,
+							int modifiers) {
+						// TODO Auto-generated method stub
+
+					}
+
+					public void onKeyUp(Widget sender, char keyCode,
+							int modifiers) {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
+			}
+		} else {
+			panel.remove(0);
+		}
+
+	}
+
+	
 
 }

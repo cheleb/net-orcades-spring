@@ -13,6 +13,9 @@ public class User implements Serializable{
 	private String login;
 
 
+	public User() {
+	}
+	
 	public User(String string) {
 		this.login = string;
 	}
@@ -26,4 +29,11 @@ public class User implements Serializable{
 	public String getLogin() {
 		return login;
 	}
+
+	
+	@Override
+	public String toString() {
+		return getLogin();
+	}
+	
 }

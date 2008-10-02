@@ -270,13 +270,15 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 
 		GrantedAuthority grantedAuthorities[] = authResult.getAuthorities();
 
-		GWTAuthentication gwtAuth = new GWTAuthentication();
+		
 		List<String> gwtGrantedAuthorityList = new ArrayList<String>();
 		for (int i = 0; i < grantedAuthorities.length; i++) {
 			GrantedAuthority grantedAuthority = grantedAuthorities[i];
 			gwtGrantedAuthorityList.add(grantedAuthority.getAuthority());
 		}
-		gwtAuth.setGrantedAuthorities(gwtGrantedAuthorityList);
+
+		GWTAuthentication gwtAuth = new GWTAuthentication(authResult.getName(), gwtGrantedAuthorityList, "logout.gwt");
+
 
 		sendRedirect(request, response, gwtAuth);
 	}

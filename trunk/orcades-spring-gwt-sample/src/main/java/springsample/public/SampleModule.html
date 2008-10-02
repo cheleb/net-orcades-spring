@@ -1,6 +1,6 @@
 <html>
 <head>
- <meta name="gwt:property" content="log_level=DEBUG">
+<meta name="gwt:property" content="log_level=DEBUG">
 <!--                                           -->
 <!-- Any title is fine                         -->
 <!--                                           -->
@@ -54,22 +54,20 @@ a:active {
 	src="springsample.SampleModule.nocache.js"></script>
 
 <h1>Sample application</h1>
-<div>All RPC service are dispatched to Spring managed bean.</div>
-<div>Security is session based with the Spring Security (ex acegi framework).</div>
-<table>
-	<tr>
-		<td id="unsecure"></td>
-		<td>Unsecure GWT-RPC call</td>
-		
-	</tr>
-	<tr>
-		<td id="secure"></td>
-		<td>Secure GWT-RPC call, retrieve user logued info.
-		<br />
-		(<b>guest</b>/<b>guest</b>)
-		</td>
-	</tr>
-</table>
-<div id="log"></div>
+<div align="center">
+<div class="note">All RPC service are dispatched to Spring managed
+bean.</div>
+<div class="note">Security is session based with the Spring
+Security (ex acegi framework).</div>
+<div class="login">
+<div id="login-bar"></div>
+<div>( <b>guest</b> / <b>guest</b> ) <br />
+( <b>adm</b> / <b>adm</b> )</div>
+</div>
+<div id="board" class="board">
+<div class="board">Message board</div>
+<div id="entry-box"></div>
+</div>
+</div>
 </body>
 </html>
