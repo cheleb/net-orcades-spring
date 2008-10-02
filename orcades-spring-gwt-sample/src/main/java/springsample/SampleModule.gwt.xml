@@ -6,7 +6,7 @@
 <module>
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name="com.google.gwt.user.User" />
-	<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
 	
 	<inherits name="net.orcades.spring.gwt.security.GWTSecurity" />
 	<!-- Specify the app entry point class.                   -->

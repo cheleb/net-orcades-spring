@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -104,10 +105,15 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 	public void authenticated(GWTAuthentication authentication) {
 		RootPanel panel = RootPanel.get("entry-box");
+		HorizontalPanel entryBoxPanel = new HorizontalPanel();
+		
 		if (authentication.userInRole("USER")) {
+			
 			if (panel.getWidgetCount() == 0) {
+				panel.add(entryBoxPanel);
+				entryBoxPanel.add(new Label("Type some text and press ENTER: "));
 				final TextBox textBox;
-				panel.add(textBox = new TextBox());
+				entryBoxPanel.add(textBox = new TextBox());
 				textBox.addKeyboardListener(new KeyboardListener() {
 
 					public void onKeyDown(Widget sender, char keyCode,

@@ -22,7 +22,7 @@ public class BoardPanel extends VerticalPanel {
 	FlexTable flexTable;
 
 	public BoardPanel() {
-		setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
+		setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		HorizontalPanel panel = new HorizontalPanel();
 		
 		panel.add(new PushButton(
@@ -49,6 +49,7 @@ public class BoardPanel extends VerticalPanel {
 							remove(flexTable);
 						}
 						flexTable = new FlexTable();
+						flexTable.setStyleName("board");
 						add(flexTable);
 
 						flexTable.setWidget(0, 0, new Label("Owner"));

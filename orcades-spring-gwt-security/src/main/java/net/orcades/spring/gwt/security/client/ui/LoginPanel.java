@@ -104,8 +104,8 @@ public class LoginPanel extends PopupPanel {
 		table.getFlexCellFormatter().setColSpan(4, 0, 2);
 
 		
-		loginTextBox.setText("adm");
-		passwordTextBox.setText("adm");
+//		loginTextBox.setText("adm");
+//		passwordTextBox.setText("adm");
 	}
 
 }
