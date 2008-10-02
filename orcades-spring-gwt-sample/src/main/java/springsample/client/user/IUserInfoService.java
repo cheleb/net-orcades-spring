@@ -2,6 +2,7 @@ package springsample.client.user;
 
 
 import net.orcades.spring.gwt.security.client.GWTSecurityException;
+import springsample.client.Message;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -20,4 +21,8 @@ public interface IUserInfoService extends RemoteService {
 	
 	public UserInfoDTO showUserInfo() throws GWTSecurityException;
 
+	
+	public Boolean deleteMessage(Message message);
+	
+	public Message newMessage(String message);
 }

@@ -3,6 +3,7 @@ package net.orcades.spring.gwt.security.client.ui;
 import net.orcades.spring.gwt.security.client.GWTAuthService;
 import net.orcades.spring.gwt.security.client.GWTAuthServiceAsync;
 import net.orcades.spring.gwt.security.client.GWTAuthentication;
+import net.orcades.spring.gwt.security.client.GWTSecurityModule;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
@@ -84,13 +85,15 @@ public class LoginPanel extends PopupPanel {
 
 					}
 
-					public void onSuccess(GWTAuthentication result) {
-						Log.debug(result.toString());
+					public void onSuccess(GWTAuthentication authentication) {
+						Log.debug(authentication.toString());
+						GWTSecurityModule.fireAuthenticationPerformed(authentication);
 						logMessage.setText("success");
 						LoginPanel.this.hide();
 						if (clickListener != null) {
 							clickListener.onClick(null);
 						}
+						
 					}
 
 				});
@@ -101,8 +104,8 @@ public class LoginPanel extends PopupPanel {
 		table.getFlexCellFormatter().setColSpan(4, 0, 2);
 
 		
-		loginTextBox.setText("guest");
-		passwordTextBox.setText("guest");
+		loginTextBox.setText("adm");
+		passwordTextBox.setText("adm");
 	}
 
 }
