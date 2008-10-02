@@ -25,17 +25,26 @@ cd net-orcades-spring
 }}}
 
 == Outside eclipse: Deploy/package artifact ==
+
+=== orcades-spring-gwt ===
+
 {{{
 cd orcades-spring-gwt
 mvn clean install
 cd ..
 }}}
 
+=== orcades-spring-gwt-security ===
+
 {{{
 cd orcades-spring-gwt-security
 mvn clean install
 cd ..
 }}}
+
+=== orcades-spring-gwt-sample ===
+
+Adapt the pom.xml to point your gwt installation
 
 {{{
 cd orcades-spring-gwt-sample
