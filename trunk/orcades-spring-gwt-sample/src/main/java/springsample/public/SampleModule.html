@@ -6,30 +6,7 @@
 <!--                                           -->
 <title>Wrapper HTML for SampleModule</title>
 
-<!--                                           -->
-<!-- Use normal html, such as style            -->
-<!--                                           -->
-<style>
-body,td,a,div,.p {
-	font-family: arial, sans-serif
-}
 
-div,td {
-	color: #000000
-}
-
-a:link,.w,.w a:link {
-	color: #0000cc
-}
-
-a:visited {
-	color: #551a8b
-}
-
-a:active {
-	color: #ff0000
-}
-</style>
 
 <!--                                           -->
 <!-- This script loads your compiled module.   -->
@@ -53,21 +30,44 @@ a:active {
 <script type="text/javascript" language="javascript"
 	src="springsample.SampleModule.nocache.js"></script>
 
-<h1>Sample application</h1>
-<div align="center">
-<div class="note">All RPC service are dispatched to Spring managed
+<div class="title">
+<a href="http://www.orcades.net"><img src="img/banner_top.jpg" border="0"/></a>
+<br />
+Sample application of <a
+	href="http://code.google.com/p/net-orcades-spring/">Orcades-lr
+Spring GWT Component</a></div>
+
+
+
+<table width="100%" align="center">
+	<tr>
+		<td width="25%"></td>
+		<td class="board">
+		<div class="login" id="login-bar"></div>
+		<div>( <b>guest</b> / <b>guest</b> ) <br />
+		( <b>adm</b> / <b>adm</b> )</div>
+		</td>
+		<td width="25%"></td>
+	</tr>
+
+	<tr>
+		<td width="25%"></td>
+		<td class="board">Message board</td>
+		<td width="25%"></td>
+	</tr>
+	<tr>
+		<td width="25%"></td>
+		<td id="board" class="board">
+
+		<div id="entry-box"></div>
+		</td>
+		<td width="25%"></td>
+	</tr>
+</table>
+
+<div class="title">RPC service are dispatched to Spring managed
 bean.</div>
-<div class="note">Security is session based with the Spring
+<div class="title">Security is session based with the Spring
 Security (ex acegi framework).</div>
-<div class="login">
-<div id="login-bar"></div>
-<div>( <b>guest</b> / <b>guest</b> ) <br />
-( <b>adm</b> / <b>adm</b> )</div>
-</div>
-<div id="board" class="board">
-<div class="board">Message board</div>
-<div id="entry-box"></div>
-</div>
-</div>
 </body>
 </html>
