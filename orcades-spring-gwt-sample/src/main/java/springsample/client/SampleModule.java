@@ -14,9 +14,11 @@ import springsample.client.user.UserInfoDTO;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -48,7 +50,7 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 		RootPanel.get("login-bar").add(loginPanel);
 		
 		loginPanel.add(
-				new Button("User login", new ClickListener() {
+				new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/login-usr.png"), "User login",  new ClickListener() {
 
 					public void onClick(Widget widget) {
 						IUserInfoService.Util.getInstance().showUserInfo(
@@ -65,10 +67,10 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 					}
 
-				}));
+				}, "!USER"));
 
 		loginPanel.add(
-				new Button("Admin Login", new ClickListener() {
+				new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/login-adm.png"), "Admin login", new ClickListener() {
 
 					public void onClick(Widget widget) {
 						IAdminInfoService.Util.getInstance().showUserInfo(
@@ -86,10 +88,10 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 					}
 
-				}));
+				}, "!ADMIN"));
 
 		
-		loginPanel.add(new SecuredPushButton("logout", new ClickListener() {
+		loginPanel.add(new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/logout.png"), "Logout", new ClickListener() {
 
 			public void onClick(Widget widget) {
 
