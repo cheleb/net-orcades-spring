@@ -6,6 +6,12 @@
 	<groupId>net.orcades.spring</groupId>
 	<artifactId>orcades-spring-gwt</artifactId>
 	<version>1.0.2</version>
+	<parent>
+	
+		<artifactId>spring</artifactId>
+		<groupId>net.orcades</groupId>
+		<version>1.0.0</version>
+	</parent>
 	<build>
 		<plugins>
 			<plugin>
