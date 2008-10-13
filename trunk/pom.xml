@@ -8,6 +8,14 @@
 	<version>1.0.0</version>
 	<name>Orcades-lr Spring GWT</name>
 	<url>http://www.orcades.net</url>
+
+
+        <organization>
+		<name>orcades-lr</name>
+		<url>http://www.orcades.net</url>
+	</organization>
+
+
 	<properties>
 		<compileSource>1.5</compileSource>
 		<spring.version>2.5.5</spring.version>

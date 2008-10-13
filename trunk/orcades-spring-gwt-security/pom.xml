@@ -3,7 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.orcades.spring</groupId>
 	<artifactId>orcades-spring-gwt-security</artifactId>
+	<name>GWT Spring Security</name>
 	<version>0.3.0</version>
+	<description>Simple integration between Spring Security and GWT.</description>
 	<parent>
 		<artifactId>spring</artifactId>
 		<groupId>net.orcades</groupId>
