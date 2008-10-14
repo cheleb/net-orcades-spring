@@ -7,6 +7,7 @@ import net.orcades.spring.gwt.security.client.rpc.GWTLogoutAsyncCallback;
 import net.orcades.spring.gwt.security.client.rpc.SecuredAsyncCallback;
 import net.orcades.spring.gwt.security.client.ui.SecuredPushButton;
 import springsample.client.admin.IAdminInfoService;
+import springsample.client.converter.ConverterView;
 import springsample.client.ui.ActionPanel;
 import springsample.client.ui.BoardPanel;
 import springsample.client.user.IUserInfoService;
@@ -38,13 +39,14 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 		Log.setUncaughtExceptionHandler();
 
 		final RootPanel messagePanel = RootPanel.get("board");
-
+		messagePanel.add(new Label("ooooooooo******ooooooooooo"));
 		boardPanel = new BoardPanel();
 		messagePanel.add(boardPanel);
 		
 
 		GWTSecurityModule.addAuthenticationListener(this);
 
+		RootPanel.get("converter").add(new ConverterView());
 		
 		HorizontalPanel loginPanel = new HorizontalPanel();
 		RootPanel.get("login-bar").add(loginPanel);
