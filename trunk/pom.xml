@@ -24,6 +24,7 @@
 		<google.webtoolkit.home>${user.home}/works/google/gwt/gwt-linux-1.5.2</google.webtoolkit.home>
 	</properties>
 	<modules>
+		<module>orcades-gwt-mvc</module>
 		<module>orcades-spring-gwt</module>
 		<module>orcades-spring-gwt-security</module>
 		<module>orcades-spring-gwt-sample</module>
