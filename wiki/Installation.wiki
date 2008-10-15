@@ -24,18 +24,16 @@ svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spr
 cd net-orcades-spring
 }}}
 
+Adapt the pom.xml to point your gwt installation
+{{{
+<google.webtoolkit.home>${user.home}/works/google/gwt/gwt-linux-1.5.2</google.webtoolkit.home>
+}}}
+
 == Outside eclipse: Deploy/package artifact ==
 
 {{{
 mvn clean install
 }}}
-=== orcades-spring-gwt-security ===
-
-
-=== orcades-spring-gwt-sample ===
-
-Adapt the pom.xml to point your gwt installation
-
 
 
 == Inside eclipse ==
