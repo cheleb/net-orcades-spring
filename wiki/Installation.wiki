@@ -26,54 +26,25 @@ cd net-orcades-spring
 
 == Outside eclipse: Deploy/package artifact ==
 
-=== orcades-spring-gwt ===
-
 {{{
-cd orcades-spring-gwt
 mvn clean install
-cd ..
 }}}
-
 === orcades-spring-gwt-security ===
 
-{{{
-cd orcades-spring-gwt-security
-mvn clean install
-cd ..
-}}}
 
 === orcades-spring-gwt-sample ===
 
 Adapt the pom.xml to point your gwt installation
 
-{{{
-cd orcades-spring-gwt-sample
-mvn clean package
-cd ..
-}}}
 
 
 == Inside eclipse ==
 
 === Build eclipse metadata (for each project) ===
 {{{
-cd orcades-spring-gwt
 mvn eclipse:clean eclipse:m2eclipse
-cd ..
 }}}
 
-{{{
-cd orcades-spring-gwt-security
-mvn eclipse:clean eclipse:m2eclipse
-cd ..
-}}}
-
-
-{{{
-cd orcades-spring-gwt-sample
-mvn eclipse:clean eclipse:m2eclipse
-cd ..
-}}}
 Now project are also eclipse project.
 
 === Import in eclipse ===
