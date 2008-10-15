@@ -18,6 +18,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.KeyboardListener;
@@ -39,18 +40,19 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 		Log.setUncaughtExceptionHandler();
 
 		final RootPanel messagePanel = RootPanel.get("board");
-		messagePanel.add(new Label("ooooooooo******ooooooooooo"));
+		//messagePanel.add(new Label("ooooooooo******ooooooooooo"));
 		boardPanel = new BoardPanel();
 		messagePanel.add(boardPanel);
 		
 
 		GWTSecurityModule.addAuthenticationListener(this);
 
-		RootPanel.get("converter").add(new ConverterView());
+		//RootPanel.get("converter").add(new ConverterView());
 		
 		HorizontalPanel loginPanel = new HorizontalPanel();
+		loginPanel.setSpacing(10);
 		RootPanel.get("login-bar").add(loginPanel);
-		
+		loginPanel.add(new HTML("Click to login ==============><br /> (disabled is user in role \"USER\")"));
 		loginPanel.add(
 				new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/login-usr.png"), "User login",  new ClickListener() {
 
@@ -71,6 +73,7 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 				}, "!USER"));
 
+		loginPanel.add(new HTML("Click to login ==========><br />(disabled if user in role \"ADMIN\")"));
 		loginPanel.add(
 				new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/login-adm.png"), "Admin login", new ClickListener() {
 
@@ -92,7 +95,7 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 				}, "!ADMIN"));
 
-		
+		loginPanel.add(new HTML("Click to login ==========><br />(disabled if user <b>not</b> in role \"ADMIN\")"));
 		loginPanel.add(new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/logout.png"), "Logout", new ClickListener() {
 
 			public void onClick(Widget widget) {
