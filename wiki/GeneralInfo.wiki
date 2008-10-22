@@ -1,6 +1,8 @@
 #summary Getting started.
 
-2 project:
+4 project:
 
   * [http://code.google.com/p/net-orcades-spring/wiki/SpringGWTRemoteServlet orcades-spring-gwt]
+  * [http://code.google.com/p/net-orcades-spring/wiki/GWTMVC orcades-gwt-mvc] simple MVC.
   * [http://code.google.com/p/net-orcades-spring/wiki/SpringGWTSecurity orcades-spring-gwt-security]
+  * [http://code.google.com/p/net-orcades-spring/wiki/SampleProject orcades-spring-gwt-sample] a sample project.
