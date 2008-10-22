@@ -3,4 +3,4 @@
 2 project:
 
   * [http://code.google.com/p/net-orcades-spring/wiki/SpringGWTRemoteServlet orcades-spring-gwt]
-  * orcades-spring-gwt-security
+  * [http://code.google.com/p/net-orcades-spring/wiki/SpringGWTSecurity orcades-spring-gwt-security]
