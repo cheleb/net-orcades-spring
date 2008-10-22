@@ -19,7 +19,7 @@ These projects are maven project. These is a (very) short, maven guide.
 {{{
 svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spring
 }}}
-
+This will checkout all project in a local folder "net-orcades-spring".
 {{{
 cd net-orcades-spring
 }}}
