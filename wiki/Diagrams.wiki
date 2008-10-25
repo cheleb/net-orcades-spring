@@ -5,9 +5,8 @@
 [http://net-orcades-spring.googlecode.com/files/login-dia.png]
 
 
-= Details =
+= Access denied process =
+http://net-orcades-spring.googlecode.com/files/accessdenied-dia.png
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Logout process =
+http://net-orcades-spring.googlecode.com/files/logout-dia.png
