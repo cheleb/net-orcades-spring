@@ -1,9 +1,9 @@
 package springsample;
 
+import junit.framework.TestCase;
 import net.orcades.gwt.mvc.client.mock.TextInputMock;
 import springsample.client.converter.ConverterController;
 import springsample.client.converter.ConverterModel;
-import junit.framework.TestCase;
 
 public class ConverterControllerTest extends TestCase {
 	 private ConverterController instance;
