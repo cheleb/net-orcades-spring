@@ -10,6 +10,13 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
+/**
+ * Module that handle secured component to enable/disable them on authentication
+ * event.
+ * 
+ * @author NOUGUIER Olivier olivier@orcades.net, olivier.nouguier@gmail.com
+ * 
+ */
 public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener {
 
 	static GWTLogoutServiceAsync logoutServiceAsync = GWT
@@ -37,12 +44,11 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 
 	static public void applyAuthentication(
 			GWTAuthenticationListener authenticationListener) {
-		if(authenticationListener==null) {
+		if (authenticationListener == null) {
 			Log.warn("No authentication!");
-		}else {
-			authenticationListener.authenticated(authentication);	
+		} else {
+			authenticationListener.authenticated(authentication);
 		}
-		
 
 	}
 
@@ -52,6 +58,9 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 		}
 	}
 
+	/**
+	 * Register the auth url.
+	 */
 	public void authenticated(GWTAuthentication authen) {
 		authentication = authen;
 		ServiceDefTarget serviceDefTarget = (ServiceDefTarget) logoutServiceAsync;
@@ -66,7 +75,7 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 		} else {
 			Log.info("User: " + authentication.getLogin() + " logs out!");
 			logoutServiceAsync.logout(logoutAsyncCallback);
-			authentication=null;
+			authentication = null;
 		}
 
 	}

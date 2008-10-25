@@ -1,5 +1,7 @@
 package net.orcades.spring.gwt.security.client.ui;
-
+/**
+ *  @author NOUGUIER Olivier olivier@orcades.net, olivier.nouguier@gmail.com
+ */
 import net.orcades.spring.gwt.security.client.GWTAccessDeniedException;
 import net.orcades.spring.gwt.security.client.GWTSecurityException;
 import net.orcades.spring.gwt.security.client.IGWTSecurityExceptionVisitor;

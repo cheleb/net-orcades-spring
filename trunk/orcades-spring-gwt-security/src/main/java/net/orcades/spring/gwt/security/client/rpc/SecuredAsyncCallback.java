@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ClickListener;
 /**
  * Generic callback to handle security exception.
- * @author Olivier NOUGUIER
+ *  @author NOUGUIER Olivier olivier@orcades.net, olivier.nouguier@gmail.com
  *
  * @param <T>
  */
