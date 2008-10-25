@@ -13,4 +13,4 @@ Allow to use the Spring security (ex acegi) to authenticate a full GWT applicati
 
 = Diagrams =
 
-Some naive [http://code.google.com/p/net-orcades-spring/wiki/Diagram diagrams] :-/
+Some naive [http://code.google.com/p/net-orcades-spring/wiki/Diagrams diagrams] :-/
