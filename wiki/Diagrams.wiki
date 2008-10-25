@@ -1,8 +1,8 @@
-#summary One-sentence summary of this page.
+#summary Some pictures.
 
-= Introduction =
 
-Add your content here.
+= Login process =
+[http://net-orcades-spring.googlecode.com/files/login-dia.png]
 
 
 = Details =
