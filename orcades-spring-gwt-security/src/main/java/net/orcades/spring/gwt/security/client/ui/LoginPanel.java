@@ -20,9 +20,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
- * @author olivier nouguier olivier@orcades.net 
- * Simple login panel.
- *
+ * @author olivier nouguier olivier@orcades.net Simple login panel. On
+ *         successful login, the panel will (re)invoke the click that opened the
+ *         login box (same behavior of webapp login form).
+ * 
  */
 public class LoginPanel extends PopupPanel {
 
@@ -42,9 +43,13 @@ public class LoginPanel extends PopupPanel {
 
 	/**
 	 * Constructor.
-	 * @param authServiceEndPoint authentication end point.
-	 * @param message Message to show in header.
-	 * @param clickListener to call on successful authentication, may be null.
+	 * 
+	 * @param authServiceEndPoint
+	 *            authentication end point.
+	 * @param message
+	 *            Message to show in header.
+	 * @param clickListener
+	 *            to call on successful authentication, may be null.
 	 */
 	public LoginPanel(final String authServiceEndPoint, String message,
 			final ClickListener clickListener) {
@@ -53,10 +58,10 @@ public class LoginPanel extends PopupPanel {
 		table.getFlexCellFormatter().setColSpan(0, 0, 2);
 		table.setWidget(1, 0, new Label("Login"));
 		table.setWidget(1, 1, loginTextBox = new TextBox());
-		
+
 		table.setWidget(2, 0, new Label("Password"));
 		table.setWidget(2, 1, passwordTextBox = new PasswordTextBox());
-		
+
 		table.setWidget(3, 0, new PushButton("Cancel", new ClickListener() {
 
 			public void onClick(Widget widget) {
@@ -68,7 +73,9 @@ public class LoginPanel extends PopupPanel {
 		table.setWidget(3, 1, new PushButton("submit", new ClickListener() {
 
 			public void onClick(Widget sender) {
-				if(StringUtils.isEmptyOrBlank(loginTextBox.getText()) || StringUtils.isEmptyOrBlank(passwordTextBox.getText())) {
+				if (StringUtils.isEmptyOrBlank(loginTextBox.getText())
+						|| StringUtils
+								.isEmptyOrBlank(passwordTextBox.getText())) {
 					logMessage.setText("Login AND password must be proviced");
 					return;
 				}
@@ -87,13 +94,14 @@ public class LoginPanel extends PopupPanel {
 
 					public void onSuccess(GWTAuthentication authentication) {
 						Log.debug(authentication.toString());
-						GWTSecurityModule.fireAuthenticationPerformed(authentication);
+						GWTSecurityModule
+								.fireAuthenticationPerformed(authentication);
 						logMessage.setText("success");
 						LoginPanel.this.hide();
 						if (clickListener != null) {
 							clickListener.onClick(null);
 						}
-						
+
 					}
 
 				});
@@ -103,9 +111,8 @@ public class LoginPanel extends PopupPanel {
 		table.setWidget(4, 0, logMessage = new Label());
 		table.getFlexCellFormatter().setColSpan(4, 0, 2);
 
-		
-//		loginTextBox.setText("adm");
-//		passwordTextBox.setText("adm");
+		// loginTextBox.setText("adm");
+		// passwordTextBox.setText("adm");
 	}
 
 }

@@ -3,7 +3,6 @@ package springsample.client;
 import net.orcades.spring.gwt.security.client.GWTAuthentication;
 import net.orcades.spring.gwt.security.client.GWTAuthenticationListener;
 import net.orcades.spring.gwt.security.client.GWTSecurityModule;
-import net.orcades.spring.gwt.security.client.rpc.GWTLogoutAsyncCallback;
 import net.orcades.spring.gwt.security.client.rpc.SecuredAsyncCallback;
 import net.orcades.spring.gwt.security.client.ui.SecuredPushButton;
 import springsample.client.admin.IAdminInfoService;
@@ -56,13 +55,19 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 					public void onClick(Widget widget) {
 						IUserInfoService.Util.getInstance().showUserInfo(
-								new SecuredAsyncCallback<UserInfoDTO>(this) {
+								new SecuredAsyncCallback<UserInfoDTO>() {
 
 									public void onSuccess(
 											UserInfoDTO userInfoDTO) {
 										Log.info("User logued: "
 												+ userInfoDTO.toString());
 
+									}
+									@Override
+									protected void doOnFailure(
+											Throwable throwable) {
+											Log.warn("Error occurs", throwable);
+									
 									}
 
 								});
@@ -98,7 +103,7 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 			public void onClick(Widget widget) {
 
-				GWTSecurityModule.logout(new GWTLogoutAsyncCallback());
+				GWTSecurityModule.logout();
 
 			}
 
