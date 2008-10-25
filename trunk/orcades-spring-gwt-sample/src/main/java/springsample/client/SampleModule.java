@@ -7,7 +7,6 @@ import net.orcades.spring.gwt.security.client.rpc.GWTLogoutAsyncCallback;
 import net.orcades.spring.gwt.security.client.rpc.SecuredAsyncCallback;
 import net.orcades.spring.gwt.security.client.ui.SecuredPushButton;
 import springsample.client.admin.IAdminInfoService;
-import springsample.client.converter.ConverterView;
 import springsample.client.ui.ActionPanel;
 import springsample.client.ui.BoardPanel;
 import springsample.client.user.IUserInfoService;
@@ -16,7 +15,6 @@ import springsample.client.user.UserInfoDTO;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -95,7 +93,7 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 				}, "!ADMIN"));
 
-		loginPanel.add(new HTML("Click to login ==========><br />(disabled if user <b>not</b> in role \"ADMIN\")"));
+		loginPanel.add(new HTML("Click to logout ==========><br />(disabled if user <b>not</b> in role \"USER\")"));
 		loginPanel.add(new SecuredPushButton(new Image(GWT.getModuleBaseURL()+"img/logout.png"), "Logout", new ClickListener() {
 
 			public void onClick(Widget widget) {
