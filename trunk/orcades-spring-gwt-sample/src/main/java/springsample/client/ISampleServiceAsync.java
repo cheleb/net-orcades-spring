@@ -3,7 +3,11 @@ package springsample.client;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
+/**
+ * Sample service.
+ * @author Nouguier Olivier olivier@orcades.net olivier.nouguier@gmail.com
+ *
+ */
 public interface ISampleServiceAsync {
 
 	public void sayHelo(String who, AsyncCallback<String> callback);

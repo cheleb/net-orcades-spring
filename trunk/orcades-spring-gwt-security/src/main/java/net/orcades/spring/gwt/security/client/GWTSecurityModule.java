@@ -3,11 +3,10 @@ package net.orcades.spring.gwt.security.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.orcades.spring.gwt.security.client.rpc.GWTLogoutAsyncCallback;
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 /**
@@ -52,6 +51,9 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 
 	}
 
+	/**
+	 * Fire logout event (empty {@link GWTAuthentication}).
+	 */
 	public static void fireLogout() {
 		for (GWTAuthenticationListener authenticationListener : list) {
 			authenticationListener.authenticated(new GWTAuthentication());
@@ -69,12 +71,25 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 
 	}
 
-	public static void logout(GWTLogoutAsyncCallback logoutAsyncCallback) {
+	public static void logout() {
 		if (authentication == null) {
 			Log.warn("No user logued in!");
 		} else {
 			Log.info("User: " + authentication.getLogin() + " logs out!");
-			logoutServiceAsync.logout(logoutAsyncCallback);
+			logoutServiceAsync.logout(new AsyncCallback<Boolean>() {
+				public void onFailure(Throwable throwable) {
+					Log.error(throwable.getMessage(), throwable);
+
+				}
+
+				/**
+				 * Logout Client component {@link GWTSecurityModule#fireLogout()}
+				 */
+				public void onSuccess(Boolean arg0) {
+					Log.debug("Logout");
+					GWTSecurityModule.fireLogout();
+				}
+			});
 			authentication = null;
 		}
 
