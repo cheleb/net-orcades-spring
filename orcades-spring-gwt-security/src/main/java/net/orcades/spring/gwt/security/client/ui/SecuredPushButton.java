@@ -8,6 +8,11 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 
+/**
+ *  
+ *  @author NOUGUIER Olivier olivier@orcades.net, olivier.nouguier@gmail.com
+ *
+ */
 public class SecuredPushButton extends PushButton implements
 		GWTAuthenticationListener {
 

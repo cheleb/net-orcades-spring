@@ -1,5 +1,10 @@
 package net.orcades.spring.gwt.security.client;
 
+/**
+ *  Exception thrown when authorization is required (~ HTTP 401).
+ *  @author NOUGUIER Olivier olivier@orcades.net, olivier.nouguier@gmail.com
+ *
+ */
 public class GWTAuthorizationRequiredException extends GWTSecurityException {
 
 	/**
