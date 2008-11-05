@@ -3,11 +3,13 @@ package net.orcades.spring.gwt.security.client.ui;
 import net.orcades.spring.gwt.security.client.GWTAuthService;
 import net.orcades.spring.gwt.security.client.GWTAuthServiceAsync;
 import net.orcades.spring.gwt.security.client.GWTAuthentication;
+import net.orcades.spring.gwt.security.client.GWTAuthenticationFailedException;
 import net.orcades.spring.gwt.security.client.GWTSecurityModule;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -88,8 +90,15 @@ public class LoginPanel extends PopupPanel {
 						.getText(), new AsyncCallback<GWTAuthentication>() {
 
 					public void onFailure(Throwable caught) {
-						logMessage.setText(caught.getMessage());
-
+						if (caught instanceof GWTAuthenticationFailedException) {
+							logMessage.setText(caught.getMessage());
+							Log.info(caught.getMessage());
+							
+						}else {
+						    logMessage.setText("Error on login");
+						    Log.error("Error on login", caught);
+						}
+						
 					}
 
 					public void onSuccess(GWTAuthentication authentication) {

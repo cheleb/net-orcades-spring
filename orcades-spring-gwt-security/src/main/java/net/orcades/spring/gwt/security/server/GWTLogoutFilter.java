@@ -36,7 +36,7 @@ public class GWTLogoutFilter implements Filter {
 	// ========================================================
 	// ========================================
 
-	private String filterProcessesUrl = "/logout.gwt";
+	private String filterProcessesUrl = "logout.gwt";
 	private String logoutSuccessUrl;
 	private LogoutHandler[] handlers = new LogoutHandler[0];
 
@@ -46,8 +46,6 @@ public class GWTLogoutFilter implements Filter {
 	// ~ Constructors
 	// ============================================================
 	// =======================================
-
-	
 
 	public GWTLogoutFilter(String logoutSuccessUrl, LogoutHandler[] handlers) {
 		Assert.hasText(logoutSuccessUrl, "LogoutSuccessUrl required");
@@ -139,12 +137,12 @@ public class GWTLogoutFilter implements Filter {
 			// strip everything from the first question mark
 			uri = uri.substring(0, queryParamIndex);
 		}
+//FIXME be more restrictive (match context) with support for hosted mode. 
+//		if ("".equals(request.getContextPath())) {
+//			return uri.endsWith("/" + filterProcessesUrl);
+//		}
 
-		if ("".equals(request.getContextPath())) {
-			return uri.endsWith(filterProcessesUrl);
-		}
-
-		return uri.endsWith(filterProcessesUrl);
+		return uri.endsWith("/" + filterProcessesUrl);
 	}
 
 	/**
@@ -163,7 +161,7 @@ public class GWTLogoutFilter implements Filter {
 	protected void sendRedirect(HttpServletRequest request,
 			HttpServletResponse response, String url) throws IOException {
 		if (url != null) {
-			//TODO send a redirect request to client ...
+			// TODO send a redirect request to client ...
 			if (!url.startsWith("http://") && !url.startsWith("https://")) {
 				url = request.getContextPath() + url;
 			}
@@ -185,9 +183,17 @@ public class GWTLogoutFilter implements Filter {
 		}
 	}
 
+	/**
+	 * Setter for filterProcesssing logout.<br>
+	 * Ensure that a leading "/" is <b>not</b> present.
+	 * @param filterProcessesUrl
+	 */
 	public void setFilterProcessesUrl(String filterProcessesUrl) {
 		Assert.hasText(filterProcessesUrl, "FilterProcessesUrl required");
+		Assert.state(!filterProcessesUrl.startsWith("/"), "Not leading slash for FilterProcessesUrl");
 		this.filterProcessesUrl = filterProcessesUrl;
+		
+
 	}
 
 	protected String getFilterProcessesUrl() {
