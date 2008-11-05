@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import springsample.client.ISampleService;
 import springsample.client.Message;
+import springsample.client.SampleCheckedException;
 import springsample.server.component.board.Board;
 
 @Component
@@ -21,10 +22,13 @@ public class SampleService implements ISampleService {
 		return "Helo " + who;
 	}
 
-	public List<Message> getMessages() {
+	public List<Message> getMessages(){
 		return board.getMessages();
 	}
 
+	public void buggy() throws SampleCheckedException{
+		throw new SampleCheckedException("Something rotten !");
+	}
 	
 	
 	

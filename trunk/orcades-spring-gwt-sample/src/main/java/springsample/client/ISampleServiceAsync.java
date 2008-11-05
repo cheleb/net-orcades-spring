@@ -12,5 +12,7 @@ public interface ISampleServiceAsync {
 
 	public void sayHelo(String who, AsyncCallback<String> callback);
 	
-	public void getMessages(AsyncCallback<List<Message>> callback);
+	public void getMessages(AsyncCallback<List<Message>> callback) ;
+	
+	public void buggy(AsyncCallback<?> callback);
 }

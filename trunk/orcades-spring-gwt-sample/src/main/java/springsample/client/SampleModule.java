@@ -14,6 +14,7 @@ import springsample.client.user.UserInfoDTO;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -109,6 +110,18 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 		}, "USER"));
 
+		
+		RootPanel buggyRootPanel = RootPanel.get("buggy");
+		if(buggyRootPanel != null) {
+			buggyRootPanel.add(new Button("Buggy", new ClickListener() {
+
+				public void onClick(Widget widget) {
+					ISampleService.Util.getInstance().buggy(new ErrorAwareAsyncCallback<Void>());
+				}
+				
+			}));
+		}
+		
 	}
 
 	
