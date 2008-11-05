@@ -115,6 +115,8 @@ public class SpringGWTRemoteServlet extends RemoteServiceServlet {
 				LOGGER.error(clazz.getName() + "::" + method.getName()
 						+ "() failed!", invocationTargetException
 						.getTargetException());
+				return RPC.encodeResponseForFailure(method, invocationTargetException.getTargetException(), request
+						.getSerializationPolicy());
 			}
 			return RPC.encodeResponseForFailure(method, th, request
 					.getSerializationPolicy());
