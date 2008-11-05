@@ -26,5 +26,7 @@ public interface ISampleService extends RemoteService {
 	
 	public String sayHelo(String who) throws GWTSecurityException;
 	
-	public List<Message> getMessages();
+	public List<Message> getMessages() ;
+	
+	public void buggy() throws SampleCheckedException;
 }
