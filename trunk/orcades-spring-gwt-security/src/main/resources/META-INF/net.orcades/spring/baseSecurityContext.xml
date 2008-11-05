@@ -24,6 +24,7 @@
 				<bean class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
 			</list>
 		</constructor-arg>
+<!--		<property name="filterProcessesUrl" value="logout.gwt" />-->
 	</bean>
 	<bean id="authenticationProcessingFilter"
 		class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilter">

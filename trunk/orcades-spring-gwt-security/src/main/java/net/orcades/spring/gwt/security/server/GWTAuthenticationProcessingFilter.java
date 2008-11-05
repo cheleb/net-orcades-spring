@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.orcades.spring.gwt.security.client.GWTAuthentication;
+import net.orcades.spring.gwt.security.client.GWTAuthenticationFailedException;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 
 	private ThreadLocal<RPCRequest> perThreadRPCRequest = new ThreadLocal<RPCRequest>();
 
+	@Autowired
+	private GWTLogoutFilter logoutFilter; 
+	
 	protected ApplicationEventPublisher eventPublisher;
 
 	private SessionRegistry sessionRegistry;
@@ -277,7 +281,7 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 			gwtGrantedAuthorityList.add(grantedAuthority.getAuthority());
 		}
 
-		GWTAuthentication gwtAuth = new GWTAuthentication(authResult.getName(), gwtGrantedAuthorityList, "logout.gwt");
+		GWTAuthentication gwtAuth = new GWTAuthentication(authResult.getName(), gwtGrantedAuthorityList, logoutFilter.getFilterProcessesUrl());
 
 
 		sendRedirect(request, response, gwtAuth);
@@ -290,8 +294,7 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 		try {
 			RPCServletUtils.writeResponse(request.getSession()
 					.getServletContext(), (HttpServletResponse) response, RPC
-					.encodeResponseForSuccess(rpcRequest.getMethod(),
-							Boolean.FALSE), false);
+					.encodeResponseForFailure(rpcRequest.getMethod(), new GWTAuthenticationFailedException(failed.getMessage()), rpcRequest.getSerializationPolicy()), Boolean.FALSE);
 		} catch (SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

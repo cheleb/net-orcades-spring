@@ -55,8 +55,9 @@ public class SecuredAsyncCallback<T> implements AsyncCallback<T> {
 			securityException.accept(securityExceptionVisitor);
 		} else {
 			Log.error(throwable.getMessage(), throwable);
+			doOnFailure(throwable);
 		}
-		doOnFailure(throwable);
+		
 
 	}
 
