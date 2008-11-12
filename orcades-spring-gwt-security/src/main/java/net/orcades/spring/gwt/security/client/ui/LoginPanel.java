@@ -78,7 +78,7 @@ public class LoginPanel extends PopupPanel {
 				if (StringUtils.isEmptyOrBlank(loginTextBox.getText())
 						|| StringUtils
 								.isEmptyOrBlank(passwordTextBox.getText())) {
-					logMessage.setText("Login AND password must be proviced");
+					logMessage.setText("Login AND password must be provided");
 					return;
 				}
 				GWTAuthServiceAsync authService = GWT
