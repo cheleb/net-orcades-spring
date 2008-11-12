@@ -75,7 +75,7 @@
 	<distributionManagement>
 		<site>
 			<id>repos.orcades.net</id>
-			<url>file:/home/manwe/public_html/orcades-spring-gwt/</url>
+			<url>file:${user.home}/public_html/orcades-spring-gwt/</url>
 		</site>
 	</distributionManagement>
 	<scm>
