@@ -12,9 +12,11 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author Nouguier Olivier olivier@orcades.net olivier.nouguier@gmail.com
  *
  */
-@RemoteServiceRelativePath("unsecure.gwt")
+@RemoteServiceRelativePath(ISampleService.URI)
 public interface ISampleService extends RemoteService {
 
+	public static final String URI = "unsecure.gwt";
+	
 	public static class Util {
 
 		public static ISampleServiceAsync getInstance() {

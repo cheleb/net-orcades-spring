@@ -2,7 +2,6 @@
 
 
 <!DOCTYPE module PUBLIC "-//GOOGLE//DTD GWT-MODULE 1.5.2//EN" "gwt-module.dtd">
-
 <module>
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name="com.google.gwt.user.User" />
@@ -14,13 +13,25 @@
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
   	<!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
   	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
-	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+  	
+  	<!--
+  	 All the servlet class are set to the org.springframework.web.context.support.HttpRequestHandlerServlet
+  	 This servlet will dispatch to the SpringManaged bean named with the GWT Shell servlet name ("shell").
+  	 ApplicationContext must provide this bean. 
+  	 -->
+  	
+	<servlet
+		class="org.springframework.web.context.support.HttpRequestHandlerServlet"
 		path="/unsecure.gwt" />
-	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+	<servlet
+		class="org.springframework.web.context.support.HttpRequestHandlerServlet"
+		path="/sampleService2-unsecure.gwt" />
+	<servlet
+		class="org.springframework.web.context.support.HttpRequestHandlerServlet"
 		path="/user/showInfo.gwt" />
-		<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+	<servlet class="org.springframework.web.context.support.HttpRequestHandlerServlet"
 		path="/admin/showInfo.gwt" />
-		
-		
-	<stylesheet src="orcades.css"/>
+<!--	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"-->
+<!--		path="/admin/showInfo.gwt" />-->
+	<stylesheet src="orcades.css" />
 </module>

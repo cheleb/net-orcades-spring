@@ -17,12 +17,15 @@
 	</filter-mapping>
 	
 	<servlet>
-		<servlet-name>orcades-spring-gwt</servlet-name>
-		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>
+		<servlet-name>shell2</servlet-name>
+<!--		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>-->
+		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
 	</servlet>
 	
+	
+	
 	<servlet-mapping>
-		<servlet-name>orcades-spring-gwt</servlet-name>
+		<servlet-name>shell2</servlet-name>
 		<url-pattern>*.gwt</url-pattern>
 	</servlet-mapping>
 	

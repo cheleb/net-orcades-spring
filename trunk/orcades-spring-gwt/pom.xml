@@ -6,7 +6,7 @@
 	<groupId>net.orcades.spring</groupId>
 	<artifactId>orcades-spring-gwt</artifactId>
 	<name>SpringGWTRemoteServlet</name>
-	<version>1.0.2</version>
+	<version>1.1.0</version>
 	<description>This servlet simply delegate an RPC request to a spring managed bean that is
  * implementing the RPC service.</description>
 	<parent>
@@ -38,7 +38,6 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
 			<version>1.5.2</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
