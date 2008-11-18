@@ -1,4 +1,4 @@
-package net.orcades.spring.gwt.security.server;
+package net.orcades.spring.gwt.component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,16 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
-import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.RPCServletUtils;
 import com.google.gwt.user.server.rpc.SerializationPolicy;
 import com.google.gwt.user.server.rpc.SerializationPolicyLoader;
 import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
-import com.google.gwt.user.server.rpc.UnexpectedException;
-
+/**
+ * 
+ * Helper to decode GWT Payload and provide {@link SerializationPolicy}. <br />
+ * Cut && Paste from google GWT code.
+ * @author olivier.nouguier@gmail.com
+ *
+ */
 @Component
 public class GWTPayloadHelper implements SerializationPolicyProvider {
 
@@ -51,6 +54,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 
 	public final SerializationPolicy getSerializationPolicy(
 			String moduleBaseURL, String strongName) {
+
 
 		SerializationPolicy serializationPolicy = getCachedSerializationPolicy(
 				moduleBaseURL, strongName);
@@ -86,48 +90,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 		return getThreadLocalRequest().getSession().getServletContext();
 	}
 
-	/**
-	 * Process a call originating from the given request. Uses the
-	 * {@link RPC#invokeAndEncodeResponse(Object, java.lang.reflect.Method, Object[])}
-	 * method to do the actual work.
-	 * <p>
-	 * Subclasses may optionally override this method to handle the payload in
-	 * any way they desire (by routing the request to a framework component, for
-	 * instance). The {@link HttpServletRequest} and {@link HttpServletResponse}
-	 * can be accessed via the {@link #getThreadLocalRequest()} and
-	 * {@link #getThreadLocalResponse()} methods.
-	 * </p>
-	 * This is public so that it can be unit tested easily without HTTP.
-	 * 
-	 * @param payload
-	 *            the UTF-8 request payload
-	 * @return a string which encodes either the method's return, a checked
-	 *         exception thrown by the method, or an
-	 *         {@link IncompatibleRemoteServiceException}
-	 * @throws SerializationException
-	 *             if we cannot serialize the response
-	 * @throws UnexpectedException
-	 *             if the invocation throws a checked exception that is not
-	 *             declared in the service method's signature
-	 * @throws RuntimeException
-	 *             if the service method throws an unchecked exception (the
-	 *             exception will be the one thrown by the service)
-	 */
-	public String processCall(String payload) throws SerializationException {
-		try {
-			RPCRequest rpcRequest = RPC.decodeRequest(payload, this.getClass(),
-					this);
-			return RPC.invokeAndEncodeResponse(this, rpcRequest.getMethod(),
-					rpcRequest.getParameters(), rpcRequest
-							.getSerializationPolicy());
-		} catch (IncompatibleRemoteServiceException ex) {
-			getServletContext()
-					.log(
-							"An IncompatibleRemoteServiceException was thrown while processing this call.",
-							ex);
-			return RPC.encodeResponseForFailure(null, ex);
-		}
-	}
+	
 
 	/**
 	 * Gets the {@link SerializationPolicy} for given module base URL and strong
@@ -195,7 +158,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 				//
 				// FIXME in hosted mode, the serialization cannot be resolved
 				// I have to send a request to the shell servlet with uses
-				// ServletContextProxy which is able to resolve the serializaton
+				// ServletContextProxy which is able to resolve the serialization
 				// policies.
 				//
 				StringBuffer buffer = new StringBuffer(request.getScheme());
@@ -274,7 +237,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 	 * @param e
 	 *            the exception which was thrown
 	 */
-	protected void doUnexpectedFailure(Throwable e) {
+	public void doUnexpectedFailure(Throwable e) {
 		ServletContext servletContext = getServletContext();
 		RPCServletUtils.writeResponseForUnexpectedFailure(servletContext,
 				getThreadLocalResponse(), e);
@@ -311,7 +274,7 @@ public class GWTPayloadHelper implements SerializationPolicyProvider {
 	 * payload before it is deserialized into objects. The default
 	 * implementation does nothing and need not be called by subclasses.
 	 */
-	protected void onBeforeRequestDeserialized(String serializedRequest) {
+	public void onBeforeRequestDeserialized(String serializedRequest) {
 	}
 
 	/**

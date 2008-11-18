@@ -3,6 +3,7 @@ package springsample.server.component.user;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import springsample.client.user.UserInfoDTO;
 import springsample.server.component.board.Board;
 
 @Component
+@Qualifier("unsecure.gwt")
 @Scope("request")
 public class UserInfoService implements IUserInfoService {
 

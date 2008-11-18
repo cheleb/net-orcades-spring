@@ -83,7 +83,8 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 				}
 
 				/**
-				 * Logout Client component {@link GWTSecurityModule#fireLogout()}
+				 * Logout Client component
+				 * {@link GWTSecurityModule#fireLogout()}
 				 */
 				public void onSuccess(Boolean arg0) {
 					Log.debug("Logout");

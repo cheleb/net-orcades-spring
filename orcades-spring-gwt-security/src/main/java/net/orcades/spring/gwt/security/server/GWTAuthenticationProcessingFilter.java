@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.orcades.spring.gwt.component.GWTPayloadHelper;
 import net.orcades.spring.gwt.security.client.GWTAuthentication;
 import net.orcades.spring.gwt.security.client.GWTAuthenticationFailedException;
 

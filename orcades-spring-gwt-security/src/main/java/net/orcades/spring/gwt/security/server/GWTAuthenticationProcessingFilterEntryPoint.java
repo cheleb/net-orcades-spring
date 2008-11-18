@@ -8,6 +8,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.orcades.spring.gwt.component.GWTPayloadHelper;
 import net.orcades.spring.gwt.security.client.GWTAuthorizationRequiredException;
 
 import org.springframework.beans.factory.InitializingBean;
