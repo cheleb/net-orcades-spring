@@ -25,6 +25,9 @@
 		path="/unsecure.gwt" />
 	<servlet
 		class="org.springframework.web.context.support.HttpRequestHandlerServlet"
+		path="/sampleService-unsecure.gwt" />
+	<servlet
+		class="org.springframework.web.context.support.HttpRequestHandlerServlet"
 		path="/sampleService2-unsecure.gwt" />
 	<servlet
 		class="org.springframework.web.context.support.HttpRequestHandlerServlet"
