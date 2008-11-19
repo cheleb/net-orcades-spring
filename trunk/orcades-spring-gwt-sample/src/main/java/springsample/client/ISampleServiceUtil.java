@@ -20,7 +20,7 @@ public class ISampleServiceUtil {
 
 	public static ISampleServiceAsync getInstance(String bean) {
 		ISampleServiceAsync async = GWT.create(ISampleService.class);
-		((ServiceDefTarget) async).setServiceEntryPoint(bean + "-"
+		((ServiceDefTarget) async).setServiceEntryPoint(GWT.getModuleBaseURL() + bean + "-"
 				+ ISampleService.URI);
 		return async;
 	}
