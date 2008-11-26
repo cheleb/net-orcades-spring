@@ -3,9 +3,13 @@ package net.orcades.spring.gwt.security.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.orcades.spring.gwt.security.client.ui.LoginPanel;
+
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
@@ -25,8 +29,53 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 
 	private static GWTAuthentication authentication;
 
+	
 	public void onModuleLoad() {
 		addAuthenticationListener(this);
+	
+	}
+
+	/**
+	 * Ask for Granted entities and fire {@link GWTSecurityModule#fireAuthenticationPerformed(GWTAuthentication)}
+	 * @param loginURL
+	 */
+	public static void initOnReload(String loginURL) {
+		final GWTAuthServiceAsync authServiceAsync = GWT
+				.create(GWTAuthService.class);
+		ServiceDefTarget serviceDefTarget = (ServiceDefTarget) authServiceAsync;
+		
+		 
+		
+		serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()
+				+ loginURL);
+		DeferredCommand.addCommand(new Command() {
+
+			public void execute() {
+				authServiceAsync.autenticate(null, null,
+						new AsyncCallback<GWTAuthentication>() {
+
+							public void onFailure(Throwable caught) {
+								if (caught instanceof GWTAuthenticationFailedException) {
+									Log.info(caught.getMessage());
+								} else {
+									Log.error("Error on login", caught);
+								}
+
+							}
+
+							public void onSuccess(
+									GWTAuthentication authentication) {
+								Log.debug(authentication.toString());
+								GWTSecurityModule
+										.fireAuthenticationPerformed(authentication);
+
+							}
+
+						});
+
+			}
+
+		});
 	}
 
 	static public void addAuthenticationListener(
