@@ -1,6 +1,7 @@
 package net.orcades.spring.gwt.security.server;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +54,8 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 	private ThreadLocal<RPCRequest> perThreadRPCRequest = new ThreadLocal<RPCRequest>();
 
 	@Autowired
-	private GWTLogoutFilter logoutFilter; 
-	
+	private GWTLogoutFilter logoutFilter;
+
 	protected ApplicationEventPublisher eventPublisher;
 
 	private SessionRegistry sessionRegistry;
@@ -88,6 +89,12 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 
 	private String filterProcessesUrl;
 
+	/**
+	 * Attempt authentication.<br />
+	 * If login && password are null, return the authenticated (login /
+	 * grantedAuthorities) if applicable (user already logued in).
+	 * FIXME Not sure that it's a good idea to use the authentication channel to send granted authorities on reload ;)
+	 */
 	public void doFilterHttp(HttpServletRequest request,
 			HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -101,13 +108,33 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 
 				RPCRequest rpcRequest = payloadHelper.decodeRPCRequest();
 
+				String username = obtainUsername(rpcRequest);
+				String password = obtainPassword(rpcRequest);
 				perThreadRPCRequest.set(rpcRequest);
 
 				Authentication authResult;
 
 				try {
+					if (username == null && password == null) {
+						// The page as been relead as Login panel never send blank or null password.
+						Principal principal = request.getUserPrincipal();
+						if (principal instanceof UsernamePasswordAuthenticationToken) {
+							//Already logued sending user name and granted authorities.
+							UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+							sendGWTAuthentication(request, response,
+									authenticationToken.getAuthorities(),
+									authenticationToken.getName());
+							return;
+						}
+						// Not logued send a blank authentication result
+						sendGWTAuthentication(request, response,
+								new GrantedAuthority[0], "");
+						return;
+					}
+
 					onPreAuthentication(request, response);
-					authResult = attemptAuthentication(request);
+					authResult = attemptAuthentication(username, password,
+							request);
 				} catch (AuthenticationException failed) {
 					// Authentication failed
 					unsuccessfulAuthentication(request, response, failed);
@@ -134,10 +161,9 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 		}
 	}
 
-	public Authentication attemptAuthentication(HttpServletRequest request)
+	public Authentication attemptAuthentication(String username,
+			String password, HttpServletRequest request)
 			throws AuthenticationException {
-		String username = obtainUsername(request);
-		String password = obtainPassword(request);
 
 		if (username == null) {
 			username = "";
@@ -200,16 +226,14 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 		return uri.endsWith(getFilterProcessesUrl());
 	}
 
-	protected String obtainUsername(HttpServletRequest request) {
-
-		RPCRequest rpcRequest = perThreadRPCRequest.get();
+	protected String obtainUsername(RPCRequest rpcRequest) {
 		Object[] parameter = rpcRequest.getParameters();
 
 		return (String) parameter[0];
 	}
 
-	protected String obtainPassword(HttpServletRequest request) {
-		RPCRequest rpcRequest = perThreadRPCRequest.get();
+	protected String obtainPassword(RPCRequest rpcRequest) {
+
 		Object[] parameter = rpcRequest.getParameters();
 
 		return (String) parameter[1];
@@ -275,15 +299,23 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 
 		GrantedAuthority grantedAuthorities[] = authResult.getAuthorities();
 
-		
+		String login = authResult.getName();
+
+		sendGWTAuthentication(request, response, grantedAuthorities, login);
+	}
+
+	private void sendGWTAuthentication(HttpServletRequest request,
+			HttpServletResponse response,
+			GrantedAuthority[] grantedAuthorities, String login)
+			throws IOException {
 		List<String> gwtGrantedAuthorityList = new ArrayList<String>();
 		for (int i = 0; i < grantedAuthorities.length; i++) {
 			GrantedAuthority grantedAuthority = grantedAuthorities[i];
 			gwtGrantedAuthorityList.add(grantedAuthority.getAuthority());
 		}
 
-		GWTAuthentication gwtAuth = new GWTAuthentication(authResult.getName(), gwtGrantedAuthorityList, logoutFilter.getFilterProcessesUrl());
-
+		GWTAuthentication gwtAuth = new GWTAuthentication(login,
+				gwtGrantedAuthorityList, logoutFilter.getFilterProcessesUrl());
 
 		sendRedirect(request, response, gwtAuth);
 	}
@@ -295,7 +327,10 @@ public class GWTAuthenticationProcessingFilter extends SpringSecurityFilter
 		try {
 			RPCServletUtils.writeResponse(request.getSession()
 					.getServletContext(), (HttpServletResponse) response, RPC
-					.encodeResponseForFailure(rpcRequest.getMethod(), new GWTAuthenticationFailedException(failed.getMessage()), rpcRequest.getSerializationPolicy()), Boolean.FALSE);
+					.encodeResponseForFailure(rpcRequest.getMethod(),
+							new GWTAuthenticationFailedException(failed
+									.getMessage()), rpcRequest
+									.getSerializationPolicy()), Boolean.FALSE);
 		} catch (SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -22,7 +22,7 @@
 	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
 		<sec:filter-chain-map path-type="ant">
 			<sec:filter-chain pattern="/**/*.gwt"
-				filters="httpSessionContextIntegrationFilter,gwtLogoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+				filters="httpSessionContextIntegrationFilter,gwtLogoutFilter,securityContextHolderAwareRequestFilter,authenticationProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
 		</sec:filter-chain-map>
 	</bean>
 	<!--

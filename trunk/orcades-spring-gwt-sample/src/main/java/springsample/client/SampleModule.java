@@ -15,7 +15,6 @@ import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -32,7 +31,13 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 	private BoardPanel boardPanel;
 
 	public void onModuleLoad() {
-
+		//
+		// Try to load granted entity (if user is already logued in 
+		//
+		GWTSecurityModule.initOnReload("security-auth2.gwt");
+		//
+		// Put handler for uncaught error.
+		//
 		Log.setUncaughtExceptionHandler();
 
 		final RootPanel messagePanel = RootPanel.get("board");
@@ -47,6 +52,9 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 		HorizontalPanel loginPanel = new HorizontalPanel();
 		loginPanel.setSpacing(10);
 		RootPanel.get("login-bar").add(loginPanel);
+
+		
+
 		loginPanel
 				.add(new HTML(
 						"Click to login ==============><br /> (disabled is user in role \"USER\")"));
@@ -111,24 +119,21 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 		}, "USER"));
 
-		
 		RootPanel buggyRootPanel = RootPanel.get("buggy");
-		
-				
+
 		if (buggyRootPanel != null) {
 			final ListBox listBox = new ListBox();
 			buggyRootPanel.add(listBox);
-			
-			
+
 			listBox.addItem("Buggy sampleService", "sampleService");
 			listBox.addItem("Fixed sampleService", "sampleService2");
-			
 
 			buggyRootPanel.add(new Button("go", new ClickListener() {
 
 				public void onClick(Widget widget) {
-					ISampleServiceUtil.getInstance(listBox.getValue(listBox.getSelectedIndex())).buggy(
-							new ErrorAwareAsyncCallback<Void>());
+					ISampleServiceUtil.getInstance(
+							listBox.getValue(listBox.getSelectedIndex()))
+							.buggy(new ErrorAwareAsyncCallback<Void>());
 				}
 
 			}));
@@ -183,7 +188,9 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 				});
 			}
 		} else {
-			panel.remove(0);
+			if (panel.getWidgetCount() > 0) {
+				panel.remove(0);
+			}
 		}
 
 	}
