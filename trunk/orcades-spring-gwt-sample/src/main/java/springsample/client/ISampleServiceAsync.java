@@ -14,5 +14,5 @@ public interface ISampleServiceAsync {
 	
 	public void getMessages(AsyncCallback<List<Message>> callback) ;
 	
-	public void buggy(AsyncCallback<?> callback);
+	public void buggy(AsyncCallback<Void> callback);
 }

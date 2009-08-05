@@ -5,12 +5,12 @@
 	<groupId>net.orcades.spring</groupId>
 	<artifactId>orcades-gwt-mvc</artifactId>
 	<name>Orcades GWT MVC</name>
-	<version>1.0.0</version>
+	
 	<description>This project hold MVC Support from GWT .</description>
 	<parent>
 		<artifactId>spring</artifactId>
 		<groupId>net.orcades</groupId>
-		<version>1.0.0</version>
+		<version>1.3.0</version>
 	</parent>
 	<build>
 		<resources>

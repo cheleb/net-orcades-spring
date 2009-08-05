@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>spring</artifactId>
 		<groupId>net.orcades</groupId>
-		<version>1.0.0</version>
+		<version>1.3.0</version>
 	</parent>
 	<groupId>net.orcades.spring</groupId>
 	<artifactId>orcades-spring-gwt-sample</artifactId>
 	<packaging>war</packaging>
 	<name>Spring GWT Sample</name>
-	<version>1.2.0</version>
+	<version>1.3.0</version>
 	<description>A sample webapp for demo.</description>
 	<pluginRepositories>
 		<pluginRepository>
@@ -33,6 +33,7 @@
 	-->
 	<!--    </properties>-->
 	<build>
+		<outputDirectory>war/WEB-INF/classes</outputDirectory>
 		<finalName>spring-gwt-${project.version}</finalName>
 		<plugins>
 			<plugin>
@@ -46,9 +47,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.7</version>
 				<configuration>
-					<wtpversion>1.5</wtpversion>
+				
+					<wtpversion>2.0</wtpversion>
+					
+
 					<!--
 						A bug in maven-eclipse mojo
 						(http://jira.codehaus.org/browse/MECLIPSE-326) doesn't allow to
@@ -58,14 +62,13 @@
 					<!--+
 					    | BEGIN BUGGY  maven-eclipse mojo
 					    +-->
-					<projectnatures>
-						<projectnature>in.cypal.studio.gwt.core.gwtNature</projectnature>
-					</projectnatures>
+					
 					<buildcommands>
 						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
 						<buildcommand>org.eclipse.wst.common.project.facet.core.builder</buildcommand>
 						<buildcommand>org.eclipse.wst.validation.validationbuilder</buildcommand>
-						<buildcommand>in.cypal.studio.gwt.core.gwtBuilder</buildcommand>
+						<buildcommand>com.google.gwt.eclipse.core.gwtProjectValidator</buildcommand>
+						<buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
 						<buildcommand>org.maven.ide.eclipse.maven2Builder</buildcommand>
 					</buildcommands>
 					<projectnatures>
@@ -73,7 +76,8 @@
 						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
 						<projectnature>org.eclipse.wst.common.modulecore.ModuleCoreNature</projectnature>
 						<projectnature>org.eclipse.jem.workbench.JavaEMFNature</projectnature>
-						<projectnature>in.cypal.studio.gwt.core.gwtNature</projectnature>
+						<projectnature>com.google.gwt.eclipse.core.gwtNature</projectnature>
+						<projectnature>com.google.gdt.eclipse.core.webAppNature</projectnature>
 						<projectnature>org.maven.ide.eclipse.maven2Nature</projectnature>
 					</projectnatures>
 					<!--+
@@ -95,46 +99,13 @@
 					<!--+
 					    | END PATCHED maven-eclipse mojo
 					    +-->
-					<additionalProjectFacets>
-						<in.cypal.studio.gwt.core.gwtFacet>1.5</in.cypal.studio.gwt.core.gwtFacet>
-					</additionalProjectFacets>
+					
 				</configuration>
 			</plugin>
 			<plugin>
-				<!--				<groupId>com.totsp.gwt</groupId>-->
-				<!--				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>-->
-				<!--				<version>2.0-beta26</version>-->
-				<!--				<configuration>-->
-				<!--					<logLevel>INFO</logLevel>-->
-				<!--					<compileTargets>-->
-				<!--						<value>springsample.SampleModule</value>-->
-				<!--					</compileTargets>-->
-<!---->
-				<!--
-					<runTarget>springsample.SampleModule/SampleModule.html</runTarget>
-				-->
-<!---->
-				<!--					<style>OBF</style>-->
-				<!--					<noServer>false</noServer>-->
-				<!--					<extraJvmArgs>-Xmx512m</extraJvmArgs>-->
-				<!--					<gwtVersion>${gwtVersion}</gwtVersion>-->
-				<!--				-->
-				<!--				</configuration>-->
-				<!--				<executions>-->
-				<!--                    <execution>-->
-				<!--                        <goals>-->
-				<!--
-					<goal>compile</goal>
-				-->
-				<!--                        </goals>-->
-				<!--                    </execution>-->
-				<!--                </executions>-->
-
-
-
-				<groupId>org.codehaus.mojo</groupId>
+							<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>1.0</version>
+				<version>1.1</version>
 
 				<executions>
 					<execution>
@@ -148,30 +119,52 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1-beta-1</version>
+				<configuration>
+					<!-- http://maven.apache.org/plugins/maven-war-plugin/ -->
+					<warSourceDirectory>war</warSourceDirectory>
+
+
+
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
 			<groupId>net.orcades.spring</groupId>
 			<artifactId>orcades-gwt-mvc</artifactId>
-			<version>1.0.0</version>
+			<version>1.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>1.7.0</version>
+			<type>jar</type>
+			<classifier>windows</classifier>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>1.5.2</version>
+			<version>1.7.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.orcades.spring</groupId>
 			<artifactId>orcades-spring-gwt-security</artifactId>
-			<version>0.4.0</version>
+			<version>1.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
 			<version>1.0</version>
 		</dependency>
+
 	</dependencies>
 </project>
