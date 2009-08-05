@@ -1,0 +1,177 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>spring</artifactId>
+		<groupId>net.orcades</groupId>
+		<version>1.0.0</version>
+	</parent>
+	<groupId>net.orcades.spring</groupId>
+	<artifactId>orcades-spring-gwt-sample</artifactId>
+	<packaging>war</packaging>
+	<name>Spring GWT Sample</name>
+	<version>1.2.0</version>
+	<description>A sample webapp for demo.</description>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gwt-maven</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<repositories>
+		<repository>
+			<id>gwt-maven</id>
+			<url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>
+		</repository>
+	</repositories>
+
+	<!--  convenience to define GWT version in one place -->
+	<!--    <properties>-->
+	<!--        <gwtVersion>1.5.2</gwtVersion>-->
+	<!--
+		<google.webtoolkit.home>${user.home}/works/google/gwt/gwt-linux-1.5.2</google.webtoolkit.home>
+	-->
+	<!--    </properties>-->
+	<build>
+		<finalName>spring-gwt-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<wtpversion>1.5</wtpversion>
+					<!--
+						A bug in maven-eclipse mojo
+						(http://jira.codehaus.org/browse/MECLIPSE-326) doesn't allow to
+						use additionnalProjectnatures add additionalBuildcommand. If you
+						apply the patch attached in the bug report, you can change comment
+					-->
+					<!--+
+					    | BEGIN BUGGY  maven-eclipse mojo
+					    +-->
+					<projectnatures>
+						<projectnature>in.cypal.studio.gwt.core.gwtNature</projectnature>
+					</projectnatures>
+					<buildcommands>
+						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+						<buildcommand>org.eclipse.wst.common.project.facet.core.builder</buildcommand>
+						<buildcommand>org.eclipse.wst.validation.validationbuilder</buildcommand>
+						<buildcommand>in.cypal.studio.gwt.core.gwtBuilder</buildcommand>
+						<buildcommand>org.maven.ide.eclipse.maven2Builder</buildcommand>
+					</buildcommands>
+					<projectnatures>
+						<projectnature>org.eclipse.wst.common.project.facet.core.nature</projectnature>
+						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
+						<projectnature>org.eclipse.wst.common.modulecore.ModuleCoreNature</projectnature>
+						<projectnature>org.eclipse.jem.workbench.JavaEMFNature</projectnature>
+						<projectnature>in.cypal.studio.gwt.core.gwtNature</projectnature>
+						<projectnature>org.maven.ide.eclipse.maven2Nature</projectnature>
+					</projectnatures>
+					<!--+
+					    |  END BUGGY maven-eclipse
+					    +-->
+					<!--
+					   | BEGIN PATCHED maven-eclipse mojo
+					   +-->
+					<!--
+						<additionalProjectnatures>
+						<projectnature>in.cypal.studio.gwt.core.gwtNature </projectnature>
+						</additionalProjectnatures> <additionalBuildcommands>
+						<buildCommand> <name>in.cypal.studio.gwt.core.gwtBuilder </name>
+						</buildCommand> </additionalBuildcommands>
+						<additionalProjectFacets>
+						<in.cypal.studio.gwt.core.gwtFacet>1.0</in.cypal.studio.gwt.core.gwtFacet>
+						</additionalProjectFacets>
+					-->
+					<!--+
+					    | END PATCHED maven-eclipse mojo
+					    +-->
+					<additionalProjectFacets>
+						<in.cypal.studio.gwt.core.gwtFacet>1.5</in.cypal.studio.gwt.core.gwtFacet>
+					</additionalProjectFacets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!--				<groupId>com.totsp.gwt</groupId>-->
+				<!--				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>-->
+				<!--				<version>2.0-beta26</version>-->
+				<!--				<configuration>-->
+				<!--					<logLevel>INFO</logLevel>-->
+				<!--					<compileTargets>-->
+				<!--						<value>springsample.SampleModule</value>-->
+				<!--					</compileTargets>-->
+<!---->
+				<!--
+					<runTarget>springsample.SampleModule/SampleModule.html</runTarget>
+				-->
+<!---->
+				<!--					<style>OBF</style>-->
+				<!--					<noServer>false</noServer>-->
+				<!--					<extraJvmArgs>-Xmx512m</extraJvmArgs>-->
+				<!--					<gwtVersion>${gwtVersion}</gwtVersion>-->
+				<!--				-->
+				<!--				</configuration>-->
+				<!--				<executions>-->
+				<!--                    <execution>-->
+				<!--                        <goals>-->
+				<!--
+					<goal>compile</goal>
+				-->
+				<!--                        </goals>-->
+				<!--                    </execution>-->
+				<!--                </executions>-->
+
+
+
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>1.0</version>
+
+				<executions>
+					<execution>
+						<configuration>
+							<module>springsample.SampleModule</module>
+						</configuration>
+
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>net.orcades.spring</groupId>
+			<artifactId>orcades-gwt-mvc</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>1.5.2</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.orcades.spring</groupId>
+			<artifactId>orcades-spring-gwt-security</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+</project>

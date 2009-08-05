@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<context:annotation-config />
+	<context:component-scan base-package="net.orcades.spring.gwt.security.server" />
+	<bean id="httpSessionContextIntegrationFilter"
+		class="org.springframework.security.context.HttpSessionContextIntegrationFilter">
+	</bean>
+	<bean id="gwtLogoutFilter" class="net.orcades.spring.gwt.security.server.GWTLogoutFilter">
+	   <constructor-arg value="exit">
+	    
+	   </constructor-arg>
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+<!--		<property name="filterProcessesUrl" value="logout.gwt" />-->
+	</bean>
+	<bean id="authenticationProcessingFilter"
+		class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilter">
+		<property name="authenticationManager" ref="authenticationManager"></property>
+		<property name="filterProcessesUrl" value="/security-auth2.gwt" />
+	</bean>
+	<bean id="securityContextHolderAwareRequestFilter"
+		class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
+	<bean id="exceptionTranslationFilter"
+		class="org.springframework.security.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean
+				class="net.orcades.spring.gwt.security.server.GWTAuthenticationProcessingFilterEntryPoint" />
+		</property>
+		<property name="accessDeniedHandler">
+			<bean class="net.orcades.spring.gwt.security.server.GWTAccessDeniedHandler" />
+		</property>
+	</bean>
+	<bean id="filterInvocationInterceptor"
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager">
+			<bean class="org.springframework.security.vote.AffirmativeBased">
+				<property name="allowIfAllAbstainDecisions" value="false" />
+				<property name="decisionVoters">
+					<list>
+						<bean class="org.springframework.security.vote.RoleVoter">
+							<property name="rolePrefix" value=""></property>
+						</bean>
+						<bean class="org.springframework.security.vote.AuthenticatedVoter" />
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="objectDefinitionSource" ref="objectDefinitionSource" />
+	</bean>
+	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref bean="authenticationProvider" />
+			</list>
+		</property>
+	</bean>
+	<bean id="authenticationProvider"
+		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService" />
+	</bean>
+</beans>
