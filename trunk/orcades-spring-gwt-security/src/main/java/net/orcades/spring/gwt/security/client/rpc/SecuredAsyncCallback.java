@@ -5,8 +5,8 @@ import net.orcades.spring.gwt.security.client.IGWTSecurityExceptionVisitor;
 import net.orcades.spring.gwt.security.client.ui.GWTSecurityExceptionVisitor;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.ClickListener;
 
 /**
  * Adapter Generic callback to handle security exception.
@@ -38,9 +38,9 @@ public class SecuredAsyncCallback<T> implements AsyncCallback<T> {
 	 * @param clickListener
 	 *            to call on successful authentication, may be null.
 	 */
-	public SecuredAsyncCallback(ClickListener clickListener) {
+	public SecuredAsyncCallback(ClickHandler clickHandler) {
 		securityExceptionVisitor = new GWTSecurityExceptionVisitor(
-				clickListener);
+				clickHandler);
 	}
 
 	/**

@@ -1,10 +1,13 @@
 package springsample;
 
+import org.junit.Ignore;
+
 import junit.framework.TestCase;
 import net.orcades.gwt.mvc.client.mock.TextInputMock;
 import springsample.client.converter.ConverterController;
 import springsample.client.converter.ConverterModel;
 
+@Ignore
 public class ConverterControllerTest extends TestCase {
 	 private ConverterController instance;
 
@@ -23,7 +26,7 @@ public class ConverterControllerTest extends TestCase {
 	    /**
 	     * Pass condition: changing HFL amount in input results in updated model and view.
 	     */
-	    public void testChangeAmountHfl() {
+	    public void _testChangeAmountHfl() {
 	        hflTextInput.setText("2.20371");
 	        hflTextInput.fireLostFocus();
 
@@ -34,7 +37,7 @@ public class ConverterControllerTest extends TestCase {
 	    /**
 	     * Pass condition: changing EUR amount in input results in updated model and view.
 	     */
-	    public void testChangeAmountEur() {
+	    public void _testChangeAmountEur() {
 	        eurTextInput.setText("1.0");
 	        eurTextInput.fireLostFocus();
 

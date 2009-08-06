@@ -14,17 +14,19 @@ import springsample.client.user.UserInfoDTO;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 
 public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
@@ -59,9 +61,9 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 				.add(new HTML(
 						"Click to login ==============><br /> (disabled is user in role \"USER\")"));
 		loginPanel.add(new SecuredPushButton(new Image(GWT.getModuleBaseURL()
-				+ "img/login-usr.png"), "User login", new ClickListener() {
+				+ "img/login-usr.png"), "User login", new ClickHandler() {
 
-			public void onClick(Widget widget) {
+			public void onClick(ClickEvent clickEvent) {
 				IUserInfoService.Util.getInstance().showUserInfo(
 						new SecuredAsyncCallback<UserInfoDTO>() {
 
@@ -86,9 +88,9 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 				.add(new HTML(
 						"Click to login ==========><br />(disabled if user in role \"ADMIN\")"));
 		loginPanel.add(new SecuredPushButton(new Image(GWT.getModuleBaseURL()
-				+ "img/login-adm.png"), "Admin login", new ClickListener() {
+				+ "img/login-adm.png"), "Admin login", new ClickHandler() {
 
-			public void onClick(Widget widget) {
+			public void onClick(ClickEvent clickEvent) {
 				IAdminInfoService.Util.getInstance().showUserInfo("guest",
 						new SecuredAsyncCallback<UserInfoDTO>(this) {
 
@@ -109,9 +111,9 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 				.add(new HTML(
 						"Click to logout ==========><br />(disabled if user <b>not</b> in role \"USER\")"));
 		loginPanel.add(new SecuredPushButton(new Image(GWT.getModuleBaseURL()
-				+ "img/logout.png"), "Logout", new ClickListener() {
+				+ "img/logout.png"), "Logout", new ClickHandler() {
 
-			public void onClick(Widget widget) {
+			public void onClick(ClickEvent event) {
 
 				GWTSecurityModule.logout();
 
@@ -128,9 +130,8 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 			listBox.addItem("Buggy sampleService", "sampleService");
 			listBox.addItem("Fixed sampleService", "sampleService2");
 
-			buggyRootPanel.add(new Button("go", new ClickListener() {
-
-				public void onClick(Widget widget) {
+			buggyRootPanel.add(new Button("go", new ClickHandler() {
+				public void onClick(ClickEvent event) {
 					ISampleServiceUtil.getInstance(
 							listBox.getValue(listBox.getSelectedIndex()))
 							.buggy(new ErrorAwareAsyncCallback<Void>());
@@ -153,11 +154,11 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 						.add(new Label("Type some text and press ENTER: "));
 				final TextBox textBox;
 				entryBoxPanel.add(textBox = new TextBox());
-				textBox.addKeyboardListener(new KeyboardListener() {
-
-					public void onKeyDown(Widget sender, char keyCode,
-							int modifiers) {
-						if (keyCode == KEY_ENTER) {
+				textBox.addKeyDownHandler(new KeyDownHandler() {
+					
+					public void onKeyDown(KeyDownEvent event) {
+						char keyCode = (char) event.getNativeKeyCode();
+						if (keyCode == KeyCodes.KEY_ENTER) {
 							IUserInfoService.Util.getInstance().newMessage(
 									textBox.getText(),
 									new ErrorAwareAsyncCallback<Message>() {
@@ -173,17 +174,6 @@ public class SampleModule implements EntryPoint, GWTAuthenticationListener {
 
 					}
 
-					public void onKeyPress(Widget sender, char keyCode,
-							int modifiers) {
-						// TODO Auto-generated method stub
-
-					}
-
-					public void onKeyUp(Widget sender, char keyCode,
-							int modifiers) {
-						// TODO Auto-generated method stub
-
-					}
 
 				});
 			}

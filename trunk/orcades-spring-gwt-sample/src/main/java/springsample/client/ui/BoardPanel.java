@@ -8,14 +8,14 @@ import springsample.client.ISampleService;
 import springsample.client.Message;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class BoardPanel extends VerticalPanel {
 
@@ -27,9 +27,8 @@ public class BoardPanel extends VerticalPanel {
 		
 		panel.add(new PushButton(
 				new Image(GWT.getModuleBaseURL() + "img/refresh.gif"),
-				new ClickListener() {
-
-					public void onClick(Widget widget) {
+				new ClickHandler() {
+					public void onClick(ClickEvent event) {
 						initMessageTable(true);
 					}
 				}));
