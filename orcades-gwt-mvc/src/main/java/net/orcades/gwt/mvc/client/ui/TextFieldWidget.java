@@ -16,10 +16,10 @@
 
 package net.orcades.gwt.mvc.client.ui;
 
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 
@@ -90,16 +90,16 @@ public class TextFieldWidget extends BaseFieldLabelWidget {
 
     }
 
-    public void addKeyboardListener(KeyboardListener listener) {
-	textBox.addKeyboardListener(listener);
+    public void addKeyboardListener(KeyPressHandler listener) {
+	textBox.addKeyPressHandler(listener);
     }
 
-    public void addClickListener(ClickListener listener) {
-	textBox.addClickListener(listener);
+    public void addClickListener(ClickHandler listener) {
+	textBox.addClickHandler(listener);
     }
 
-    public void addFocusListener(FocusListener listener) {
-	textBox.addFocusListener(listener);
+    public void addFocusListener(FocusHandler listener) {
+	textBox.addFocusHandler(listener);
     }
 
     public void setEnabled(boolean enabled) {

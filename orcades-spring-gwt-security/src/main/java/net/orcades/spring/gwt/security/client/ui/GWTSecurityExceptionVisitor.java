@@ -7,15 +7,15 @@ import net.orcades.spring.gwt.security.client.GWTSecurityException;
 import net.orcades.spring.gwt.security.client.IGWTSecurityExceptionVisitor;
 
 import com.allen_sauer.gwt.log.client.Log;
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickHandler;
 
 public class GWTSecurityExceptionVisitor implements
 		IGWTSecurityExceptionVisitor {
 
-	private ClickListener clickListener;
+	private ClickHandler clickHandler;
 
-	public GWTSecurityExceptionVisitor(ClickListener clickListener) {
-		this.clickListener = clickListener;
+	public GWTSecurityExceptionVisitor(ClickHandler clickHandler) {
+		this.clickHandler = clickHandler;
 	}
 
 	public void visit(
@@ -23,7 +23,7 @@ public class GWTSecurityExceptionVisitor implements
 		Log.info("Auth required");
 		LoginPanel loginPanel = new LoginPanel(authorizationRequiredException
 				.getAuthServiceEndPoint(), authorizationRequiredException
-				.getMessage(), clickListener);
+				.getMessage(), clickHandler);
 		loginPanel.center();
 		loginPanel.show();
 
@@ -33,7 +33,7 @@ public class GWTSecurityExceptionVisitor implements
 		Log.info("Access denied");
 		LoginPanel accessDeniedPanel = new LoginPanel(accessDeniedException
 				.getAuthServiceEndPoint(), accessDeniedException
-				.getMessage(), clickListener);
+				.getMessage(), clickHandler);
 		accessDeniedPanel.center();
 		accessDeniedPanel.show();
 

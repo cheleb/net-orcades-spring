@@ -16,9 +16,10 @@
 
 package net.orcades.gwt.mvc.client.ui;
 
-import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 
 public class MaskTextFieldWidget extends TextFieldWidget {
 	private String mask;
@@ -28,15 +29,18 @@ public class MaskTextFieldWidget extends TextFieldWidget {
 		mask = textMask;
         setMaxLength(mask.length());
         
-		textBox.addKeyboardListener(new KeyboardListenerAdapter() {
-			public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+		textBox.addKeyPressHandler(new KeyPressHandler() {
+			
+			public void onKeyPress(KeyPressEvent keyPressEvent) {
+				Object sender = keyPressEvent.getSource();
+				char keyCode = keyPressEvent.getCharCode();
                 String text = ((TextBox) sender).getText();
                 int pos=((TextBox) sender).getCursorPos();
                 int selLength=((TextBox) sender).getSelectionLength();
 //                String selText=((TextBox) sender).getSelectedText();
                 try {
 				
-                    if ((keyCode == (char) KEY_TAB || keyCode == (char) KEY_ENTER) || (keyCode == (char) KEY_BACKSPACE))
+                    if ((keyCode == (char) KeyCodes.KEY_TAB || keyCode == (char)  KeyCodes.KEY_ENTER) || (keyCode == (char)  KeyCodes.KEY_BACKSPACE))
                         return;
                     if(text.length()==mask.length() && selLength==0)    {//reached the end of mask
                         return;

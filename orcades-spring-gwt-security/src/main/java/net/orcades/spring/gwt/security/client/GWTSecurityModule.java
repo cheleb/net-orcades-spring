@@ -3,8 +3,6 @@ package net.orcades.spring.gwt.security.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.orcades.spring.gwt.security.client.ui.LoginPanel;
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

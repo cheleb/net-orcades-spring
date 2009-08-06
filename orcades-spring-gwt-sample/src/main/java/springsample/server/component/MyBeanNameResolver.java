@@ -1,7 +1,5 @@
 package springsample.server.component;
 
-import org.springframework.stereotype.Component;
-
 import net.orcades.spring.gwt.BeanNameResolutionException;
 import net.orcades.spring.gwt.IBeanNameResolver;
 

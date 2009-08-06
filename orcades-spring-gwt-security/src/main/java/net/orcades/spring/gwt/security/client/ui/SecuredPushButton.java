@@ -4,7 +4,7 @@ import net.orcades.spring.gwt.security.client.GWTAuthentication;
 import net.orcades.spring.gwt.security.client.GWTAuthenticationListener;
 import net.orcades.spring.gwt.security.client.GWTSecurityModule;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 
@@ -20,16 +20,16 @@ public class SecuredPushButton extends PushButton implements
 
 	private boolean inverse = true;
 
-	public SecuredPushButton(Image off, String title,  ClickListener clickListener,
+	public SecuredPushButton(Image off, String title,  ClickHandler clickHandler,
 			String role) {
-		super(off, clickListener);
+		super(off, clickHandler);
 		off.setTitle(title);
 		init(role);
 	}
-	public SecuredPushButton(String string, ClickListener clickListener,
+	public SecuredPushButton(String string, ClickHandler clickHandler,
 			String role) {
 
-		super(string, clickListener);
+		super(string, clickHandler);
 		init(role);
 	}
 	private void init(String role) {

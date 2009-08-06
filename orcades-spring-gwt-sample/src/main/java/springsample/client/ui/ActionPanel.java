@@ -9,14 +9,14 @@ import springsample.client.user.IUserInfoService;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Node;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.Widget;
 
 public class ActionPanel extends HorizontalPanel implements
 		GWTAuthenticationListener {
@@ -31,9 +31,9 @@ public class ActionPanel extends HorizontalPanel implements
 		this.message = message;
 
 		add(delete = new PushButton(new Image(GWT.getModuleBaseURL()
-				+ "img/delete.gif"), new ClickListener() {
-
-			public void onClick(Widget sender) {
+				+ "img/delete.gif"), new ClickHandler() {
+					
+			public void onClick(ClickEvent event) {
 				IUserInfoService.Util.getInstance().deleteMessage(message,
 						new SecuredAsyncCallback<Boolean>(this) {
 							@Override

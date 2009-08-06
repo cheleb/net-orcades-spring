@@ -8,16 +8,16 @@ import net.orcades.spring.gwt.security.client.GWTSecurityModule;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
@@ -53,7 +53,7 @@ public class LoginPanel extends PopupPanel {
 	 *            to call on successful authentication, may be null.
 	 */
 	public LoginPanel(final String authServiceEndPoint, String message,
-			final ClickListener clickListener) {
+			final ClickHandler clickHandler) {
 		setWidget(table);
 		table.setWidget(0, 0, new Label(message));
 		table.getFlexCellFormatter().setColSpan(0, 0, 2);
@@ -63,17 +63,17 @@ public class LoginPanel extends PopupPanel {
 		table.setWidget(2, 0, new Label("Password"));
 		table.setWidget(2, 1, passwordTextBox = new PasswordTextBox());
 
-		table.setWidget(3, 0, new PushButton("Cancel", new ClickListener() {
-
-			public void onClick(Widget widget) {
-				LoginPanel.this.hide();
+		table.setWidget(3, 0, new PushButton("Cancel", new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {
+							LoginPanel.this.hide();
 
 			}
 
 		}));
-		table.setWidget(3, 1, new PushButton("submit", new ClickListener() {
+		table.setWidget(3, 1, new PushButton("submit", new ClickHandler() {
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if (StringUtils.isEmptyOrBlank(loginTextBox.getText())
 						|| StringUtils
 								.isEmptyOrBlank(passwordTextBox.getText())) {
@@ -106,8 +106,8 @@ public class LoginPanel extends PopupPanel {
 								.fireAuthenticationPerformed(authentication);
 						logMessage.setText("success");
 						LoginPanel.this.hide();
-						if (clickListener != null) {
-							clickListener.onClick(null);
+						if (clickHandler != null) {
+							clickHandler.onClick(null);
 						}
 
 					}

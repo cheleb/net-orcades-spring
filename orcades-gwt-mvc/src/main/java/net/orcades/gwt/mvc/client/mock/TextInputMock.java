@@ -6,26 +6,29 @@ import java.util.List;
 
 import net.orcades.gwt.mvc.client.ui.TextInput;
 
-import com.google.gwt.user.client.ui.FocusListener;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public class TextInputMock implements TextInput {
 
-    private List<FocusListener> focusListeners = new ArrayList<FocusListener>();
+    private List<BlurHandler> focusListeners = new ArrayList<BlurHandler>();
 
     private String text;
 
     public void fireLostFocus() {
-        for (Iterator<FocusListener> iFocusListeners = focusListeners.iterator();
+        for (Iterator<BlurHandler> iFocusListeners = focusListeners.iterator();
         iFocusListeners.hasNext();) {
-            ((FocusListener) iFocusListeners.next()).onLostFocus(null);
+            ((BlurHandler) iFocusListeners.next()).onBlur(null);
         }
     }
 
-    public void addFocusListener(FocusListener listener) {
+    public void addFocusListener(BlurHandler listener) {
         focusListeners.add(listener);
     }
 
-    public void removeFocusListener(FocusListener listener) {
+    public void removeFocusListener(BlurHandler listener) {
         focusListeners.remove(listener);
     }
 
@@ -36,4 +39,19 @@ public class TextInputMock implements TextInput {
     public void setText(String text) {
         this.text = text;
     }
+
+	public HandlerRegistration addFocusHandler(FocusHandler arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void fireEvent(GwtEvent<?> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public HandlerRegistration addBlurHandler(BlurHandler arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

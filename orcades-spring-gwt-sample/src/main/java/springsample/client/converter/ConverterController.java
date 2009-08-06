@@ -4,8 +4,8 @@ import net.orcades.gwt.mvc.client.model.BaseModel;
 import net.orcades.gwt.mvc.client.model.ModelChangeListener;
 import net.orcades.gwt.mvc.client.ui.TextInput;
 
-import com.google.gwt.user.client.ui.FocusListenerAdapter;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 
 public class ConverterController {
 	private ConverterModel converterModel;
@@ -15,8 +15,11 @@ public class ConverterController {
     }
 
     public void registerHflInput(final TextInput hflInput) {
-        hflInput.addFocusListener(new FocusListenerAdapter() {
-            public void onLostFocus(Widget sender) {
+        hflInput.addBlurHandler(new BlurHandler() {
+			
+			public void onBlur(BlurEvent event) {
+				
+			
                 try {
                     float amountHfl = Float.parseFloat(hflInput.getText());
                     converterModel.updateAmountHfl(amountHfl);
@@ -33,8 +36,9 @@ public class ConverterController {
     }
 
     public void registerEurInput(final TextInput eurInput) {
-        eurInput.addFocusListener(new FocusListenerAdapter() {
-            public void onLostFocus(Widget sender) {
+        eurInput.addBlurHandler(new BlurHandler() {
+			
+			public void onBlur(BlurEvent event) {
                 try {
                     float amountEur = Float.parseFloat(eurInput.getText());
                     converterModel.updateAmountEur(amountEur);
