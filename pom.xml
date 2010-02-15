@@ -20,7 +20,7 @@
 		<compileSource>1.5</compileSource>
 		<spring.version>2.5.5</spring.version>
 		<svn-repository>https://net-orcades-spring.googlecode.com/svn/trunk/</svn-repository>
-		
+		<gwt.version>1.7.0</gwt.version>	
 		
 	</properties>
 	<modules>
