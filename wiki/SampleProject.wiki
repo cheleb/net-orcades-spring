@@ -2,7 +2,4 @@
 
 = Introduction =
 
-Illustrate use of SpringGWT, SpringGWT project. 
-
-
-= Details =
+See the README.txt in the sample project
