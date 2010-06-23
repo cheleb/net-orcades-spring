@@ -7,11 +7,13 @@
 	<name>Orcades GWT MVC</name>
 	
 	<description>This project hold MVC Support from GWT .</description>
+    
 	<parent>
 		<artifactId>spring</artifactId>
 		<groupId>net.orcades</groupId>
-		<version>1.3.0</version>
+		<version>1.4.0-SNAPSHOT</version>
 	</parent>
+    
 	<build>
 		<resources>
 			<resource>
@@ -36,7 +38,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>1.7.0</version>
+			<version>${gwt.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
