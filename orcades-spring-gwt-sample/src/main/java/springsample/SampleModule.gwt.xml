@@ -5,7 +5,14 @@
 <module>
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name="com.google.gwt.user.User" />
-	<inherits name="com.allen_sauer.gwt.log.gwt-log-INFO" />
+    
+	<!-- gwt logging -->
+    <!-- See: http://code.google.com/p/gwt-log/wiki/GettingStarted  -->
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+    <set-property name="log_DivLogger" value="DISABLED" />
+    <set-property name="log_RemoteLogger" value="ENABLED" />
+    <extend-property name="log_level" values="INFO, DEBUG" />
+    
 	<inherits name="net.orcades.gwt.mvc.MVC" />
 	<inherits name="net.orcades.spring.gwt.security.GWTSecurity" />
 	<!-- Specify the app entry point class.                   -->

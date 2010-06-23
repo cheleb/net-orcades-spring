@@ -3,8 +3,7 @@ package net.orcades.spring.gwt.security.server;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,8 +11,8 @@ import net.orcades.spring.gwt.component.GWTPayloadHelper;
 import net.orcades.spring.gwt.security.client.GWTAccessDeniedException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.ui.AccessDeniedHandler;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
@@ -30,16 +29,8 @@ public class GWTAccessDeniedHandler implements AccessDeniedHandler {
 	@Autowired
 	private GWTAuthenticationProcessingFilter authenticationProcessingFilter;
 
-	
-	public void handle(ServletRequest req, ServletResponse resp,
-			AccessDeniedException accessDeniedException) throws IOException,
-			ServletException {
-		
-		
-		HttpServletRequest request = (HttpServletRequest) req;
-		HttpServletResponse response = (HttpServletResponse) resp;
-
-		
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
+            throws IOException, ServletException {
 		
 		// Store the request & response objects in thread-local storage.
 

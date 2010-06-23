@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>orcades-spring-gwt-sample</display-name>
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-	
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-	<servlet>
-		<servlet-name>shell2</servlet-name>
-<!--		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>-->
-		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
-	</servlet>
-	
-	
-	
-	<servlet-mapping>
-		<servlet-name>shell2</servlet-name>
-		<url-pattern>*.gwt</url-pattern>
-	</servlet-mapping>
-	
-	<filter>
-		<description> This filter insure the avalability of Web Scopes
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>orcades-spring-gwt-sample</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>shell2</servlet-name>
+        <!--		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>-->
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>shell2</servlet-name>
+        <url-pattern>*.gwt</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>remoteLoggerServiceImpl</servlet-name>
+        <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>remoteLoggerServiceImpl</servlet-name>
+        <url-pattern>/springsample.SampleModule/gwt-log</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <description> This filter insure the avalability of Web Scopes
 			(request, session)</description>
-		<display-name>Spring Web scope Filter</display-name>
-		<filter-name>spring-web-scope</filter-name>
-		<filter-class> org.springframework.web.filter.RequestContextFilter 
-		</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>spring-web-scope</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<listener>
-		<listener-class> org.springframework.web.context.ContextLoaderListener 
-		</listener-class>
-	</listener>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value> classpath:/spring/applicationContext.xml</param-value>
-	</context-param>
+        <display-name>Spring Web scope Filter</display-name>
+        <filter-name>spring-web-scope</filter-name>
+        <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>spring-web-scope</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value> classpath:/spring/applicationContext.xml</param-value>
+    </context-param>
 </web-app>
