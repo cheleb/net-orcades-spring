@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <!-- Import the GWT support -->
@@ -19,7 +19,7 @@
 	<!--
 	   Spring security FilterChainProxy  
 	-->
-	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
+	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
 		<sec:filter-chain-map path-type="ant">
 			<sec:filter-chain pattern="/**/*.gwt"
 				filters="httpSessionContextIntegrationFilter,gwtLogoutFilter,securityContextHolderAwareRequestFilter,authenticationProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
@@ -28,15 +28,20 @@
 	<!--
 	   Protecting the resources
 	 -->
-	<bean id="objectDefinitionSource" class="java.lang.String">
-		<constructor-arg>
-			<value><![CDATA[
-                                PATTERN_TYPE_APACHE_ANT
-                                /**/user/*.gwt=USER
-                                /**/admin/*.gwt=ADMIN                               
-                        ]]></value>
-		</constructor-arg>
-	</bean>
+     <sec:filter-security-metadata-source id="objectDefinitionSource">
+        <sec:intercept-url pattern="/**/user/*.gwt" access="USER"/>
+        <sec:intercept-url pattern="/**/admin/*.gwt" access="ADMIN"/>
+      </sec:filter-security-metadata-source>
+     
+<!--	<bean id="objectDefinitionSource" class="java.lang.String">-->
+<!--		<constructor-arg>-->
+<!--			<value><![CDATA[-->
+<!--                                PATTERN_TYPE_APACHE_ANT-->
+<!--                                /**/user/*.gwt=USER-->
+<!--                                /**/admin/*.gwt=ADMIN                               -->
+<!--                        ]]></value>-->
+<!--		</constructor-arg>-->
+<!--	</bean>-->
 	
 	<!--
 	  The  userDetailService.
