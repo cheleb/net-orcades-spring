@@ -9,7 +9,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+
 
 /**
  * Module that handle secured component to enable/disable them on authentication
@@ -20,6 +22,8 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
  */
 public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener {
 
+	static final String GWT_SECURITY_REDIRECT_TAG = "gwt.security-redirect";
+
 	static GWTLogoutServiceAsync logoutServiceAsync = GWT
 			.create(GWTLogoutService.class);
 
@@ -27,25 +31,24 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 
 	private static GWTAuthentication authentication;
 
-	
 	public void onModuleLoad() {
 		addAuthenticationListener(this);
-	
+
 	}
 
 	/**
-	 * Ask for Granted entities and fire {@link GWTSecurityModule#fireAuthenticationPerformed(GWTAuthentication)}
+	 * Ask for Granted entities and fire
+	 * {@link GWTSecurityModule#fireAuthenticationPerformed(GWTAuthentication)}
+	 * 
 	 * @param loginURL
 	 */
 	public static void initOnReload(String loginURL) {
 		final GWTAuthServiceAsync authServiceAsync = GWT
 				.create(GWTAuthService.class);
 		ServiceDefTarget serviceDefTarget = (ServiceDefTarget) authServiceAsync;
-		
-		 
-		
-		serviceDefTarget.setServiceEntryPoint(GWT.getModuleBaseURL()
-				+ loginURL);
+
+		serviceDefTarget
+				.setServiceEntryPoint(GWT.getModuleBaseURL() + loginURL);
 		DeferredCommand.addCommand(new Command() {
 
 			public void execute() {
@@ -126,7 +129,14 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 			logoutServiceAsync.logout(new AsyncCallback<Boolean>() {
 				public void onFailure(Throwable throwable) {
 					Log.error(throwable.getMessage(), throwable);
-
+					if (isSecurityRedirect(throwable)) {
+						boolean success = handleSecurityRedirect(throwable);
+						if (!success) {
+							Log.error(throwable.getMessage(), throwable);
+						}
+					} else {
+						Log.error(throwable.getMessage(), throwable);
+					}
 				}
 
 				/**
@@ -140,6 +150,57 @@ public class GWTSecurityModule implements EntryPoint, GWTAuthenticationListener 
 			});
 			authentication = null;
 		}
-
 	}
+
+	public static boolean isSecurityRedirect(Throwable throwable) {
+		return throwable instanceof InvocationException
+				&& throwable.toString().contains(
+						"<meta name=\"" + GWT_SECURITY_REDIRECT_TAG + "\"");
+	}
+
+	/**
+	 * 
+	 * @param throwable
+	 * @return true if handled ok, false on failure (
+	 */
+	public static boolean handleSecurityRedirect(Throwable throwable) {
+		Log.debug("handleSecurityRedirect");
+		Log.debug("detected meta tag:" + GWT_SECURITY_REDIRECT_TAG);
+		// Some external security framework requests
+		// redirection, but
+		// redirection in async call needs to be handled
+		// manually.
+		// (for example redirection to login page)
+		// Added this for supporting josso single sign-on
+		String VALUE_TAG = "content=\"";
+		String requestData = throwable.toString();
+
+		int tagIndex = requestData.indexOf(GWT_SECURITY_REDIRECT_TAG);
+		int valueIndex = requestData.indexOf(VALUE_TAG, tagIndex);
+		int valueStartIndex = valueIndex + VALUE_TAG.length();
+		int valueEndIndex = requestData.indexOf("\"", valueStartIndex + 1);
+
+		String value = requestData.substring(valueStartIndex, valueEndIndex);
+		if (value != null && value.toLowerCase().startsWith("http://")
+				|| value.toLowerCase().startsWith("https://")) {
+			String redirectTargetUrl = value + GWT.getModuleBaseURL();
+			Log.info("Found redirect meta-tag ('" + GWT_SECURITY_REDIRECT_TAG
+					+ "') in async response, redirecting to:"
+					+ redirectTargetUrl);
+			redirect(redirectTargetUrl);
+			return true;
+		} else {
+			Log.error("Found redirect meta-tag ('"
+					+ GWT_SECURITY_REDIRECT_TAG
+					+ "') but no suitable redirectTargetUrl (should start with http:// or https://):"
+					+ value);
+			return false;
+		}
+	}
+
+	native static void redirect(String url)
+	/*-{
+	        $wnd.location.replace(url);
+
+	}-*/;
 }
