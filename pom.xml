@@ -4,7 +4,7 @@
 	<groupId>net.orcades</groupId>
 	<artifactId>spring</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.0</version>
+	<version>1.4.1-SNAPSHOT</version>
 	<name>Orcades-lr Spring GWT</name>
 	<url>http://www.orcades.net</url>
 
@@ -76,7 +76,7 @@
 		</site>
 	</distributionManagement>
 	<scm>
-		<connection> scm:svn:https://net-orcades-spring.googlecode.com/svn/tags/1.4.0 </connection>
+		<connection> scm:svn:https://net-orcades-spring.googlecode.com/svn/trunk//spring </connection>
 	</scm>
 	<reporting>
 		<plugins>
