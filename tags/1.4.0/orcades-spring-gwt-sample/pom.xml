@@ -1,0 +1,212 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>spring</artifactId>
+		<groupId>net.orcades</groupId>
+		<version>1.4.0</version>
+	</parent>
+    
+	<groupId>net.orcades.spring</groupId>
+	<artifactId>orcades-spring-gwt-sample</artifactId>
+	<packaging>war</packaging>
+	<name>Spring GWT Sample</name>
+	<description>A sample webapp for demo.</description>
+
+<!--	<pluginRepositories>-->
+<!--		<pluginRepository>-->
+<!--			<id>gwt-maven</id>-->
+<!--			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>-->
+<!--		</pluginRepository>-->
+<!--	</pluginRepositories>-->
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>gwt-maven</id>-->
+<!--			<url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
+
+	<!--  convenience to define GWT version in one place -->
+	<!--    <properties>-->
+	<!--        <gwtVersion>1.5.2</gwtVersion>-->
+	<!--
+		<google.webtoolkit.home>${user.home}/works/google/gwt/gwt-linux-1.5.2</google.webtoolkit.home>
+	-->
+	<!--    </properties>-->
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <wtpversion>1.5</wtpversion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+	<dependencies>
+		<dependency>
+			<groupId>net.orcades.spring</groupId>
+			<artifactId>orcades-gwt-mvc</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+			<type>jar</type>
+			<classifier>windows</classifier>
+			<scope>provided</scope>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.orcades.spring</groupId>
+			<artifactId>orcades-spring-gwt-security</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+	</dependencies>
+    
+    <profiles>
+        <profile>
+            <id>gwt</id>
+            <activation>
+                <property>
+                    <name>gwt</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>gwt-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                    <goal>run</goal>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <runTarget>nl.tc.rd.exp.boom.Application/Application.html</runTarget>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <delete dir="${basedir}/target/war" quiet="true" failonerror="false" />
+                                        <delete dir="${basedir}/target/extra" quiet="true" failonerror="false" />
+                                        <delete dir="${basedir}/target/${artifactId}-${version}" quiet="true" failonerror="false" />
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>release</id>
+            <activation>
+                <file>
+                    <exists>../checkout</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>gwt-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                    <goal>run</goal>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <runTarget>nl.tc.rd.exp.boom.Application/Application.html</runTarget>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <delete dir="${basedir}/target/war" quiet="true" failonerror="false" />
+                                        <delete dir="${basedir}/target/extra" quiet="true" failonerror="false" />
+                                        <delete dir="${basedir}/target/${artifactId}-${version}" quiet="true" failonerror="false" />
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
+</project>
