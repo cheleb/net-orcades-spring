@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>spring</artifactId>
 		<groupId>net.orcades</groupId>
-		<version>1.4.1</version>
+		<version>1.4.2-SNAPSHOT</version>
 	</parent>
     
 	<groupId>net.orcades.spring</groupId>
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>net.orcades.spring</groupId>
 			<artifactId>orcades-gwt-mvc</artifactId>
-			<version>1.4.1</version>
+			<version>1.4.2-SNAPSHOT</version>
 		</dependency>
 		<!--
 		<dependency>
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>net.orcades.spring</groupId>
 			<artifactId>orcades-spring-gwt-security</artifactId>
-			<version>1.4.1</version>
+			<version>1.4.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
