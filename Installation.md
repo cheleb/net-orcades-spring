@@ -1,0 +1,61 @@
+# Introduction #
+
+These projects are maven project. These is a (very) short, maven guide.
+
+# Details #
+
+## Prerequisite ##
+  * maven eclipse plugin: http://m2eclipse.codehaus.org/
+  * cypal studio: http://code.google.com/p/cypal-studio/ (for webapp sample).
+  * WTP (!)
+
+  * [gwt-log.2.5.2](http://code.google.com/p/gwt-log/downloads/list) (must be added manualy)
+
+## Checkout project ##
+
+```
+svn checkout http://net-orcades-spring.googlecode.com/svn/trunk/ net-orcades-spring
+```
+This will checkout all project in a local folder "net-orcades-spring".
+```
+cd net-orcades-spring
+```
+
+Adapt the pom.xml to point your gwt installation
+```
+<google.webtoolkit.home>${user.home}/works/google/gwt/gwt-linux-1.5.2</google.webtoolkit.home>
+```
+
+## Outside eclipse: Deploy/package artifact ##
+
+```
+mvn clean install
+```
+
+
+## Inside eclipse ##
+
+### Build eclipse metadata (for each project) ###
+```
+mvn eclipse:clean eclipse:m2eclipse
+```
+
+Now project are also eclipse project.
+
+### Import in eclipse ###
+
+Now you can import those 2 projects with Import >> General >> Existing project into workspace.
+
+**be aware** of m2eclipse behaviour with "workspace resolution" with WTP project
+
+For the orcades-spring-gwt-sample project only
+
+If the orcades-sprint-gwt project is open in your workspace and "workspace resolution" enabled (default), then you must add orcades-spring-gwt project to project classpath dependencies of the orcades-spring-gwt-sample (webapp) project.
+
+Also, the Project >> Properties >> Java EE Module dependencies must be correct:
+  * orcades-spring-gwt checked
+  * maven dependencies checked
+
+
+
+Have fun...

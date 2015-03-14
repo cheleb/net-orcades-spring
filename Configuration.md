@@ -1,0 +1,128 @@
+# Hosted mode #
+
+  * web.xml (spring support):
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	
+	<servlet>
+		<servlet-name>shell</servlet-name>
+		<servlet-class>com.google.gwt.dev.shell.GWTShellServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>shell</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<description> This filter insure the avalability of Web Scopes
+			(request, session)</description>
+		<display-name>Spring Web scope Filter</display-name>
+		<filter-name>spring-web-scope</filter-name>
+		<filter-class> org.springframework.web.filter.RequestContextFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>spring-web-scope</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class> org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value> classpath:/spring/applicationContext.xml</param-value>
+	</context-param>
+</web-app>
+```
+
+  * module.gwt.xml
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name="com.google.gwt.user.User" />
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class="springsample.client.SampleModule" />
+	<inherits name="com.google.gwt.user.theme.standard.Standard" />
+  	<!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
+  	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
+	<servlet class="net.orcades.spring.gwt.SpringGWTRemoteServlet"
+		path="/sample.gwt" />
+</module>
+```
+
+# WTP Mode #
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>orcades-spring-gwt-sample</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>orcades-spring-gwt</servlet-name>
+		<servlet-class>net.orcades.spring.gwt.SpringGWTRemoteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orcades-spring-gwt</servlet-name>
+		<url-pattern>*.gwt</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<description> This filter insure the avalability of Web Scopes
+			(request, session)</description>
+		<display-name>Spring Web scope Filter</display-name>
+		<filter-name>spring-web-scope</filter-name>
+		<filter-class> org.springframework.web.filter.RequestContextFilter 
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>spring-web-scope</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class> org.springframework.web.context.ContextLoaderListener 
+		</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value> classpath:/spring/applicationContext.xml</param-value>
+	</context-param>
+</web-app>
+```
+
+# Spring context #
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <context:annotation-config />
+    
+    <context:component-scan base-package="springsample.server.component"></context:component-scan>
+
+</beans>
+
+```

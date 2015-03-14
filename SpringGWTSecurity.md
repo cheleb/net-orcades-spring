@@ -1,0 +1,14 @@
+# Introduction #
+
+Allow to use the Spring security (ex acegi) to authenticate a full GWT application.
+
+
+# Details #
+
+  * Use the standard Spring security as musch as possible.
+  * Provide some simple UI component (Login popin, SecuredCallBack ).
+  * (experimental) Provide UI authorization aware component (activates/deactivates when users login/logout/roles change).
+
+# Diagrams #
+
+Some naive [diagrams](http://code.google.com/p/net-orcades-spring/wiki/Diagrams) :-/

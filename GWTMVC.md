@@ -1,0 +1,3 @@
+# Introduction #
+
+Fully inspired from http://robvanmaris.jteam.nl/2008/03/09/test-driven-development-for-gwt-ui-code/
